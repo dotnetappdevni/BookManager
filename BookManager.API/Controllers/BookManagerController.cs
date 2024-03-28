@@ -15,7 +15,7 @@ namespace BookManager.API.Controllers
         IBookManagerServices _ibookManagerServices;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public BookManagerController(, IBookManagerServices ibookManagerServices)
+        public BookManagerController(IBookManagerServices ibookManagerServices)
         {
             _ibookManagerServices = ibookManagerServices;
         }
