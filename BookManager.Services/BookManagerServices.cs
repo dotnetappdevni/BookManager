@@ -15,7 +15,10 @@ namespace BookManager.Services
         IBookManagerServices _ibookManagerServices;
         private readonly ApplicationDBContext _dbContext;
         private static readonly NLog.Logger _logger = LogManager.GetCurrentClassLogger();
- 
+        public BookManagerServices()
+        {
+
+        }
         public BookManagerServices(ApplicationDBContext dbContext)
         {
             _dbContext = dbContext;             
@@ -102,7 +105,7 @@ namespace BookManager.Services
             BookManagerErrorObject errorObject = new BookManagerErrorObject();
 
             var bookInventory = _dbContext.BookInventories
-                .FirstOrDefault(w => w.BarCode == barCode && w.BookId== bookId && w.IsActive == true && !w.IsDeleted == false);
+                .FirstOrDefault(w => w.BarCode == barCode && w.BookId== bookId && w.IsActive == true &&  w.IsDeleted == false);
 
             if (bookInventory != null)
             {
@@ -121,14 +124,16 @@ namespace BookManager.Services
                     else
                     {
                         // Update inventory count.
-                        bookInventory.InventoryCount--;
+                        
+                        bookInventory.InventoryCount=bookInventory.InventoryCount-1;
                         _dbContext.SaveChanges();
-
+                        var customer = _dbContext.Customers.FirstOrDefault();
                         // Add book loan entry.
                         var newLoan = new BooksLoaned
                         {
+                           
                             BarCode = barCode,
-                            BookId= bookId,
+                            BookId= bookId,                            
                             CustomerId = customerId,
                             DateBorrowed = DateTime.Now,
                             DueDate = DateTime.Today.AddDays(returnDateInterval),
@@ -143,7 +148,7 @@ namespace BookManager.Services
                             _dbContext.SaveChanges();
                             errorObject.Succeeded = true;
                             errorObject.Messages.Add("Check Out Completed Successfully");
-                            errorObject.Data = _dbContext.BookInventories.Where(w => w.BarCode == barCode && w.IsActive == true && w.IsDeleted == false);
+                            errorObject.Data = bookInventory.InventoryCount;
                         }
                         catch (Exception ex)
                         {
