@@ -65,7 +65,7 @@ namespace BookManager.Services
         {
             BookManagerErrorObject errorObject = new BookManagerErrorObject();
 
-            var bookToDelete = _dbContext.Books.FirstOrDefault(x => x.Id == book.Id);
+            var bookToDelete = _dbContext.Books.FirstOrDefault(w => w.Id == book.Id);
             if (bookToDelete != null)
             {
                 _dbContext.Books.Remove(bookToDelete);
@@ -73,9 +73,9 @@ namespace BookManager.Services
                 try
                 {
                     _dbContext.SaveChanges();
-                    List<string> errors = new List<string>();
-                    errors.Add("Book Deleted Succesfully");
-                    errorObject = new BookManagerErrorObject { Succeeded = true, Errors = null, Exception = null };
+                    List<string> messages = new List<string>();
+                    messages.Add("Book Deleted Succesfully");
+                    errorObject = new BookManagerErrorObject { Succeeded = true,Messages= messages, Errors = null, Exception = null };
 
                 }
                 catch (System.Exception ex)
@@ -90,6 +90,7 @@ namespace BookManager.Services
             return errorObject;
 
         }
+
         /// <summary>
         /// 
         /// </summary>
