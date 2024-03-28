@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookManager.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,15 @@ namespace BookManager.Services.Interfaces
 {
     public interface IBookManagerServices
     {
+
+        List<Book> GetAll();
+        BookManagerErrorObject Add(Book book);
+
+        BookManagerErrorObject Delete(Book book);
+
+        int? CheckOut(Book book);
+
+        int? ChecKIn(Book book);
+
     }
 }
