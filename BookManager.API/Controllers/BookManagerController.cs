@@ -5,17 +5,18 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BookManager.Services.Interfaces;
 using System.Text.Json;
+using NLog;
 namespace BookManager.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class BookManagerController : ControllerBase
     {
-        private readonly ILogger<BookManagerController> _logger;
         IBookManagerServices _ibookManagerServices;
-        public BookManagerController(ILogger<BookManagerController> logger, IBookManagerServices ibookManagerServices)
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        public BookManagerController(, IBookManagerServices ibookManagerServices)
         {
-            _logger = logger;
             _ibookManagerServices = ibookManagerServices;
         }
 
@@ -39,8 +40,6 @@ namespace BookManager.API.Controllers
             {
                 return StatusCode(400, JsonSerializer.Serialize(checkoutProcess.Errors));
             }
-
-
         }
 
         [HttpPost]

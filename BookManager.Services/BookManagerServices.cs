@@ -1,7 +1,9 @@
 ﻿using BookManager.Domain;
 using BookManager.Models;
 using BookManager.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
+using NLog;
 using System.Collections.Generic;
 using System.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -11,27 +13,23 @@ namespace BookManager.Services
     {
         IBookManagerServices _ibookManagerServices;
         private readonly ApplicationDBContext _dbContext;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+ 
         public BookManagerServices(ApplicationDBContext dbContext)
-
         {
-            _dbContext = dbContext;
+            _dbContext = dbContext;             
         }
 
         public List<Book> GetAll()
         {
             return _dbContext.Books.Where(w => w.IsDeleted == false && w.IsActive == true).ToList();
         }
-        public int? ChecKIn(Book book)
-        {
-            var bookToCheckIn = _dbContext.BookInventories.FirstOrDefault(x => x.BarCode == book.BarCode);
-            if (bookToCheckIn != null)
-            {
 
-                bookToCheckIn.InventoryCount--;
-                _dbContext.SaveChanges();
-            }
-            return _dbContext.BookInventories.FirstOrDefault(x => x.BarCode == book.BarCode).InventoryCount;
+        public List<Book> GetById(int id)
+        {
+            return _dbContext.Books.Where(w => w.IsDeleted == false && w.Id==id && w.IsActive == true).ToList();
         }
+ 
 
         public BookManagerErrorObject Add(Book book)
         {
@@ -50,7 +48,7 @@ namespace BookManager.Services
                 List<string> errors = new List<string>();
                 errors.Add(ex.Message);
                 errorObject = new BookManagerErrorObject { Succeeded = false, Errors = errors, Exception = ex };
-
+                _logger.Error("Exception has occoured in the bookmanager service Add Book method ", ex);
 
             }
             return errorObject;
@@ -91,16 +89,7 @@ namespace BookManager.Services
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public void Update()
-        {
-            throw new System.NotImplementedException();
-        }
-
-
+       
         /// <summary>
         /// Searches to see if the book can be checked out and if there is suffient inventory
         /// Also checks to see if the customer has already the same book checked out already.
@@ -141,7 +130,7 @@ namespace BookManager.Services
                             CustomerId = customerId,
                             DateBorrowed = DateTime.Now,
                             DueDate = DateTime.Today.AddDays(returnDateInterval),
-                            Status = (int)Enums.BookstatusEnuum.Loaned,
+                            Status = (int)Enums.BookstatusEnum.Loaned,
                             IsActive = true,
                             IsDeleted = false
                         };
@@ -170,5 +159,47 @@ namespace BookManager.Services
             return errorObject;
         }
 
+        public BookManagerErrorObject Return(int customerId, string barCode, DateTime dateReturned)
+        {
+            BookManagerErrorObject errorObject= new BookManagerErrorObject();
+            var booktoReturn = _dbContext.BooksLoand.Where(w => w.CustomerId == customerId && w.BarCode == barCode && w.IsActive == true && w.IsDeleted == false).FirstOrDefault();
+            if (booktoReturn != null)
+            {
+                booktoReturn.Status = (int)Enums.BookstatusEnum.Returned;
+                booktoReturn.DateReturned = dateReturned;
+                try
+                {
+                    _dbContext.SaveChanges();
+                }
+                catch (Exception ex)
+                { 
+                    errorObject.Exception= ex;
+                    errorObject.Errors.Add("Error occoured in the return method in bookmanger service"); 
+                    
+                }
+
+                var updateBookInventory = _dbContext.BookInventories.Where(w => w.BarCode == barCode && w.IsActive == true && w.IsDeleted == false).FirstOrDefault();
+                if (updateBookInventory != null)
+                {
+                    updateBookInventory.InventoryCount++;
+                    updateBookInventory.DateModified = dateReturned;
+                    try
+                    {
+                       _dbContext.SaveChanges();
+                       errorObject.Succeeded=true;
+                       errorObject.Messages.Add("Book was sucesfull returned to the system");
+                    } 
+                    catch (Exception ex)
+                    {
+                       errorObject.Succeeded = false;
+                       errorObject.Exception = ex;
+                       errorObject.Errors.Add("Return a book failed please see exception");
+                    }
+                        
+                }
+
+            }
+            return errorObject;
+        }
     }
 }

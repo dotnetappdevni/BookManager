@@ -13,6 +13,8 @@ using BookManager.CustomerService;
 using BookManager.DAL;
 using Microsoft.Extensions.DependencyInjection;
 using System.Runtime.CompilerServices;
+using NLog.Web;
+using NLog.Extensions.Logging;
 namespace BookManager
 {
     public class Program
@@ -65,33 +67,30 @@ namespace BookManager
                 }
             });
             });
+
+            builder.Services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.ClearProviders();
+                loggingBuilder.AddNLog();
+            });
+
             builder.Services.AddScoped<ICustomerService, CustomerServices>();
-
             builder.Services.AddScoped<IBookManagerServices, BookManagerServices>();
-
             builder.Services.AddAuthentication().AddJwtBearer();
             builder.Services.AddAuthorization();
-          
 
             builder.Services.AddIdentityApiEndpoints<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDBContext>();
-            var app = builder.Build();
-
-          
-                app.UseSwagger();
-                app.UseSwaggerUI();
-          
+            var app = builder.Build();          
+            app.UseSwagger();
+            app.UseSwaggerUI();        
 
             app.UseHttpsRedirection();
-
             app.MapIdentityApi<IdentityUser>();
             app.UseAuthorization();
             app.UseAuthorization();
-           
-
-
             app.MapControllers();
-              app.Run();
+           app.Run();
         }
 
      

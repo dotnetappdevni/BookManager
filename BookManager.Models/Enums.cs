@@ -8,7 +8,7 @@ namespace BookManager.Models
 {
     public static class Enums
     {
-        public enum BookstatusEnuum
+        public enum BookstatusEnum
         {
             Loaned=1,    // 1
             Returned=2,   // 2

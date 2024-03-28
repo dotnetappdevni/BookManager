@@ -11,12 +11,16 @@ namespace BookManager.Services.Interfaces
     {
 
         List<Book> GetAll();
+
+        List<Book> GetById(int id);
+
         BookManagerErrorObject Add(Book book);
 
         BookManagerErrorObject Delete(Book book);
 
         BookManagerErrorObject CheckOut(int customerId, Book book, int returnDateInterval);
 
+        BookManagerErrorObject Return(int customerId, string barCode, DateTime dateReturned);
 
     }
 }

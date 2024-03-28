@@ -10,6 +10,9 @@ namespace BookManager.CustomerService.Interface
     public interface ICustomerService
     {
         List<Customer> GetAll();
+
+        Customer GetCustomerById(int id);
+
         BookManagerErrorObject Add(Customer customer);
 
         BookManagerErrorObject Delete(Customer customer);
