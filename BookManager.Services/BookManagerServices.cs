@@ -56,7 +56,7 @@ namespace BookManager.Services
         }
 
         /// <summary>
-        /// 
+        /// Delete A Book from the Book Manager
         /// </summary>
         /// <param name="book"></param>
         /// <returns></returns>
@@ -97,20 +97,20 @@ namespace BookManager.Services
         /// </summary>
         /// <param name="book"></param>
         /// <returns>returns a BookManagerErrorObject object with details of success or failure</returns>
-        public BookManagerErrorObject CheckOut(int customerId, Book book, int returnDateInterval)
+        public BookManagerErrorObject CheckOut(int customerId,int bookId, string barCode, int returnDateInterval)
         {
             BookManagerErrorObject errorObject = new BookManagerErrorObject();
 
             var bookInventory = _dbContext.BookInventories
-                .FirstOrDefault(w => w.BarCode == book.BarCode && w.IsActive == true && !w.IsDeleted == false);
+                .FirstOrDefault(w => w.BarCode == barCode && w.BookId== bookId && w.IsActive == true && !w.IsDeleted == false);
 
             if (bookInventory != null)
             {
                 // Check if the book is in stock to give out.
                 if (bookInventory.InventoryCount > 0)
                 {
-                    var customerLoanedBooks = _dbContext.BooksLoand
-                        .Where(w => w.BarCode == book.BarCode && w.CustomerId == customerId && w.IsActive==true && w.IsDeleted==false)
+                    var customerLoanedBooks = _dbContext.BooksLoaned
+                        .Where(w => w.BarCode == barCode && w.CustomerId == customerId && w.IsActive==true && w.IsDeleted==false)
                         .ToList();
 
                     if (customerLoanedBooks.Any())
@@ -125,9 +125,10 @@ namespace BookManager.Services
                         _dbContext.SaveChanges();
 
                         // Add book loan entry.
-                        var newLoan = new BooksLoand
+                        var newLoan = new BooksLoaned
                         {
-                            BarCode = book.BarCode,
+                            BarCode = barCode,
+                            BookId= bookId,
                             CustomerId = customerId,
                             DateBorrowed = DateTime.Now,
                             DueDate = DateTime.Today.AddDays(returnDateInterval),
@@ -135,14 +136,14 @@ namespace BookManager.Services
                             IsActive = true,
                             IsDeleted = false
                         };
-                        _dbContext.BooksLoand.Add(newLoan);
+                        _dbContext.BooksLoaned.Add(newLoan);
 
                         try
                         {
                             _dbContext.SaveChanges();
                             errorObject.Succeeded = true;
                             errorObject.Messages.Add("Check Out Completed Successfully");
-                            errorObject.Data = _dbContext.BookInventories.Where(w => w.BarCode == book.BarCode && w.IsActive == true && w.IsDeleted == false);
+                            errorObject.Data = _dbContext.BookInventories.Where(w => w.BarCode == barCode && w.IsActive == true && w.IsDeleted == false);
                         }
                         catch (Exception ex)
                         {
@@ -164,7 +165,7 @@ namespace BookManager.Services
         public BookManagerErrorObject Return(int customerId, string barCode, DateTime dateReturned)
         {
             BookManagerErrorObject errorObject= new BookManagerErrorObject();
-            var booktoReturn = _dbContext.BooksLoand.Where(w => w.CustomerId == customerId && w.BarCode == barCode && w.IsActive == true && w.IsDeleted == false).FirstOrDefault();
+            var booktoReturn = _dbContext.BooksLoaned.Where(w => w.CustomerId == customerId && w.BarCode == barCode && w.IsActive == true && w.IsDeleted == false).FirstOrDefault();
             if (booktoReturn != null)
             {
                 booktoReturn.Status = (int)Enums.BookstatusEnum.Returned;

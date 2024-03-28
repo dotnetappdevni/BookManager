@@ -4,6 +4,7 @@ using BookManager.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookManager.DAL.Data.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240328155857_CustData2")]
+    partial class CustData2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,8 +86,8 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 3,
                             BarCode = "1111",
                             Condition = 0,
-                            DateCreated = new DateTime(2024, 3, 28, 16, 1, 28, 971, DateTimeKind.Local).AddTicks(259),
-                            DateModified = new DateTime(2024, 3, 28, 16, 1, 28, 971, DateTimeKind.Local).AddTicks(261),
+                            DateCreated = new DateTime(2024, 3, 28, 15, 58, 56, 778, DateTimeKind.Local).AddTicks(1134),
+                            DateModified = new DateTime(2024, 3, 28, 15, 58, 56, 778, DateTimeKind.Local).AddTicks(1135),
                             Description = "After stopping off at Starbase Yorktown, a remote outpost on the fringes of Federation space, the USS Enterprise, halfway into their five-year mission, is destroyed by an unstoppable wave of unknown aliens.",
                             Genre = 0,
                             ISBN = "329-320-2392-1",
@@ -99,8 +102,8 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 4,
                             BarCode = "3333",
                             Condition = 0,
-                            DateCreated = new DateTime(2024, 3, 28, 16, 1, 28, 971, DateTimeKind.Local).AddTicks(269),
-                            DateModified = new DateTime(2024, 3, 28, 16, 1, 28, 971, DateTimeKind.Local).AddTicks(271),
+                            DateCreated = new DateTime(2024, 3, 28, 15, 58, 56, 778, DateTimeKind.Local).AddTicks(1141),
+                            DateModified = new DateTime(2024, 3, 28, 15, 58, 56, 778, DateTimeKind.Local).AddTicks(1142),
                             Description = "The novelization of the \"First Contact\" film which also includes a behind-the-scenes look at the making of the film. Captain Pickard, Commander Riker, Lieutenant Commander Data and the rest of the crew must face their greatest foe, the half-organic, half-mechanical Borg..",
                             Genre = 0,
                             ISBN = "978-0-671-56743-1",
@@ -115,8 +118,8 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 5,
                             BarCode = "4444",
                             Condition = 0,
-                            DateCreated = new DateTime(2024, 3, 28, 16, 1, 28, 971, DateTimeKind.Local).AddTicks(276),
-                            DateModified = new DateTime(2024, 3, 28, 16, 1, 28, 971, DateTimeKind.Local).AddTicks(277),
+                            DateCreated = new DateTime(2024, 3, 28, 15, 58, 56, 778, DateTimeKind.Local).AddTicks(1145),
+                            DateModified = new DateTime(2024, 3, 28, 15, 58, 56, 778, DateTimeKind.Local).AddTicks(1147),
                             Description = "Landing on Earth, the Doctor finds a stranded alien in need of protection – and is dragged headlong into the life of his old friend Donna Noble, knowing that if she ever remembers their time together, she will die…",
                             Genre = 0,
                             ISBN = "978-1-84607-571-7",
@@ -170,7 +173,7 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 1,
                             BarCode = "1111",
                             BookId = 3,
-                            DateCreated = new DateTime(2024, 3, 28, 16, 1, 28, 971, DateTimeKind.Local).AddTicks(129),
+                            DateCreated = new DateTime(2024, 3, 28, 15, 58, 56, 778, DateTimeKind.Local).AddTicks(1041),
                             InventoryCount = 10,
                             IsActive = true,
                             IsDeleted = false
@@ -180,7 +183,7 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 2,
                             BarCode = "3333",
                             BookId = 4,
-                            DateCreated = new DateTime(2024, 3, 28, 16, 1, 28, 971, DateTimeKind.Local).AddTicks(210),
+                            DateCreated = new DateTime(2024, 3, 28, 15, 58, 56, 778, DateTimeKind.Local).AddTicks(1102),
                             InventoryCount = 5,
                             IsActive = true,
                             IsDeleted = false
@@ -190,7 +193,7 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 3,
                             BarCode = "4444",
                             BookId = 5,
-                            DateCreated = new DateTime(2024, 3, 28, 16, 1, 28, 971, DateTimeKind.Local).AddTicks(229),
+                            DateCreated = new DateTime(2024, 3, 28, 15, 58, 56, 778, DateTimeKind.Local).AddTicks(1114),
                             InventoryCount = 9,
                             IsActive = true,
                             IsDeleted = false
@@ -319,34 +322,26 @@ namespace BookManager.DAL.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 10,
+                            Id = 6,
                             Forename = "The",
-                            IsActive = true,
-                            IsDeleted = false,
                             Surname = "Doctor"
                         },
                         new
                         {
-                            Id = 11,
+                            Id = 7,
                             Forename = "Martha",
-                            IsActive = true,
-                            IsDeleted = false,
                             Surname = "Jones"
                         },
                         new
                         {
-                            Id = 12,
+                            Id = 8,
                             Forename = "Amy",
-                            IsActive = true,
-                            IsDeleted = false,
                             Surname = "Pond"
                         },
                         new
                         {
-                            Id = 13,
+                            Id = 9,
                             Forename = "River",
-                            IsActive = true,
-                            IsDeleted = false,
                             Surname = "Song"
                         });
                 });
@@ -568,15 +563,15 @@ namespace BookManager.DAL.Data.Migrations
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a48b982b-4434-4a2f-b42b-abe0d162ca46",
+                            ConcurrencyStamp = "caec7515-af1b-435c-86ea-974a07d1c883",
                             Email = "Admin@EDT.COM",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EDT.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOlSPlBQ55gyaBNZgc5QSDiC81gp7VmKG90YbeqNSb4nHLiXf4UeTdIEDXOa8/YKEw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJhwCDzqpp6Fj5MB5gF5OWM23Gup937a5zrI2iQMLDqII2sMhL/HrGUGIQlP2nHobg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "abe5dcbf-6e3f-47a8-8f92-53e481e90736",
+                            SecurityStamp = "9aa50406-4789-472f-9ce1-1cb29f030b45",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         },
@@ -584,15 +579,15 @@ namespace BookManager.DAL.Data.Migrations
                         {
                             Id = "d18e858a-c38d-4083-99b6-c5697b81d7cd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "133aab6f-816c-4d5d-a4c4-40dcc36c5f17",
+                            ConcurrencyStamp = "89204dbb-4053-4040-88f3-e7a84ec8a98f",
                             Email = "Staff@EDT.COM",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "STAFF@EDT.COM",
                             NormalizedUserName = "STAFF",
-                            PasswordHash = "AQAAAAIAAYagAAAAELWrfyfeYlk/jYk6CTc0s527IFJ+JQmMeJjWh3ARfJb8eZebhJ3cDGIpMdiOHkTGUw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK3VdUDLaVdptGmxQr9s2x+4OSLc0PQO2HoT6zkchuWUR5L0GhbAzb9icYaeM+hh9Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bc641975-4a33-4051-b251-6230855c21ff",
+                            SecurityStamp = "47dea264-8537-4a5d-b8be-bfec8733231f",
                             TwoFactorEnabled = false,
                             UserName = "Staff"
                         });

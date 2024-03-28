@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookManager.Models
 {
-    public class BooksLoand
+    public class BooksLoaned
     {
         public int Id { get; set; }
         public int CustomerId { get; set; }

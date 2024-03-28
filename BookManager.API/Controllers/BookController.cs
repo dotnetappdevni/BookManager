@@ -35,10 +35,10 @@ namespace BookManager.API.Controllers
         }
 
         [HttpPost("Checkout")]
-        public IActionResult Checkout(int CustomerId, Book book, int returnDateInterval)
+        public IActionResult Checkout(int CustomerId, int bookId, int returnDateInterval)
         {
             
-            var checkoutProcess= _ibookManagerServices.CheckOut(CustomerId, book, returnDateInterval);
+            var checkoutProcess= _ibookManagerServices.CheckOut(CustomerId, bookId, returnDateInterval);
             if (checkoutProcess.Succeeded)
             {
                 return Ok(JsonSerializer.Serialize(checkoutProcess.Messages));

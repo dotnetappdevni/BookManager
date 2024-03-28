@@ -25,10 +25,10 @@ namespace BookManager.Tests
         public void Book_Checkout_ShouldDescreaseInventory()
         {
             var mockDbContext = new Mock<ApplicationDBContext>();
- 
+
             var bookInventoryData = new List<BookInventory>
             {
-                new BookInventory { BarCode = "12345", IsActive = true, IsDeleted = false, InventoryCount = 1 }
+                new BookInventory { BookId=1, BarCode = "12345", IsActive = true, IsDeleted = false, InventoryCount = 1 }
             }.AsQueryable();
 
             var mockBookInventorySet = new Mock<DbSet<BookInventory>>();
@@ -39,23 +39,28 @@ namespace BookManager.Tests
 
             mockDbContext.Setup(m => m.BookInventories).Returns(mockBookInventorySet.Object);
 
-            var bookLoanData = new List<BooksLoand>().AsQueryable();
-            var mockBookLoanSet = new Mock<DbSet<BooksLoand>>();
-            mockBookLoanSet.As<IQueryable<BooksLoand>>().Setup(m => m.Provider).Returns(bookLoanData.Provider);
-            mockBookLoanSet.As<IQueryable<BooksLoand>>().Setup(m => m.Expression).Returns(bookLoanData.Expression);
-            mockBookLoanSet.As<IQueryable<BooksLoand>>().Setup(m => m.ElementType).Returns(bookLoanData.ElementType);
+            var bookLoanData = new List<BooksLoaned>()
+            {
+                new BooksLoaned{ BookId=1,BarCode = "12345", CustomerId=1 , IsActive = true, IsDeleted = false,}
+            }.AsQueryable();
+            
+            var mockBookLoanSet = new Mock<DbSet<BooksLoaned>>();
+            mockBookLoanSet.As<IQueryable<BooksLoaned>>().Setup(m => m.Provider).Returns(bookLoanData.Provider);
+            mockBookLoanSet.As<IQueryable<BooksLoaned>>().Setup(m => m.Expression).Returns(bookLoanData.Expression);
+            mockBookLoanSet.As<IQueryable<BooksLoaned>>().Setup(m => m.ElementType).Returns(bookLoanData.ElementType);
 
-            mockBookLoanSet.As<IQueryable<BooksLoand>>().Setup(m => m.GetEnumerator()).Returns(bookLoanData.GetEnumerator());
+            mockBookLoanSet.As<IQueryable<BooksLoaned>>().Setup(m => m.GetEnumerator()).Returns(bookLoanData.GetEnumerator());
 
             var bookManager = new BookManagerServices(mockDbContext.Object);
-            var book = new Book { BarCode = "12345" };
+            var book = new Book { Id = 1, BarCode = "12345" };
             int customerId = 1;
+            int bookId = 1;
             int returnDateInterval = 7;
 
-            var result = bookManager.CheckOut(customerId, book, returnDateInterval);
-               var actual = result.Data.ToString();
+            var result = bookManager.CheckOut(customerId, bookId, book.BarCode, returnDateInterval);
+            var actual = result.Data.ToString();
             // Assert
-            Assert.AreEqual(result.Succeeded,true);
+            Assert.AreEqual(result.Succeeded, true);
 
 
         }

@@ -22,7 +22,7 @@ namespace BookManager.Domain
         public DbSet<BookInventory> BookInventories { get; set; }
         public DbSet<Customer> Customers { get; set; }
 
-        public DbSet<BooksLoand> BooksLoand { get; set; }
+        public DbSet<BooksLoaned> BooksLoaned { get; set; }
         public DbSet<Book> Books { get; set; }
 
 
@@ -31,13 +31,13 @@ namespace BookManager.Domain
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Customer>().HasData(new Customer { Id = 1, Forename = "The", Surname = "Doctor" });
-            modelBuilder.Entity<Customer>().HasData(new Customer { Id = 2, Forename = "Martha", Surname = "Jones" });
-            modelBuilder.Entity<Customer>().HasData(new Customer { Id = 3, Forename = "Amy", Surname = "Pond" });
-            modelBuilder.Entity<Customer>().HasData(new Customer { Id = 4, Forename = "River", Surname = "Song" });
+            modelBuilder.Entity<Customer>().HasData(new Customer { Id = 10, Forename = "The", Surname = "Doctor" ,IsActive=true,IsDeleted=false});
+            modelBuilder.Entity<Customer>().HasData(new Customer { Id = 11, Forename = "Martha", Surname = "Jones", IsActive = true, IsDeleted = false });
+            modelBuilder.Entity<Customer>().HasData(new Customer { Id = 12, Forename = "Amy", Surname = "Pond", IsActive = true, IsDeleted = false });
+            modelBuilder.Entity<Customer>().HasData(new Customer { Id = 13, Forename = "River", Surname = "Song", IsActive = true, IsDeleted = false });
 
 
-            modelBuilder.Entity<BookInventory>().HasData(new BookInventory { Id = 1,BookId= 3, BarCode = "1111", InventoryCount=10, DateCreated = DateTime.Now,IsActive = true,IsDeleted=false});
+            modelBuilder.Entity<BookInventory>().HasData(new BookInventory { Id = 1, BookId= 3, BarCode = "1111", InventoryCount=10, DateCreated = DateTime.Now,IsActive = true,IsDeleted=false});
             modelBuilder.Entity<BookInventory>().HasData(new BookInventory { Id = 2, BookId = 4, BarCode = "3333", InventoryCount = 5, DateCreated = DateTime.Now, IsActive = true, IsDeleted = false });
             modelBuilder.Entity<BookInventory>().HasData(new BookInventory { Id = 3, BookId = 5, BarCode = "4444", InventoryCount = 9, DateCreated = DateTime.Now, IsActive = true, IsDeleted = false });
 

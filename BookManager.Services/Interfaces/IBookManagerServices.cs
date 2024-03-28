@@ -16,10 +16,10 @@ namespace BookManager.Services.Interfaces
 
         BookManagerErrorObject Add(Book book);
 
+        BookManagerErrorObject CheckOut(int customerId, int bookId, string barCode, int returnDateInterval);
+
         BookManagerErrorObject Delete(Book book);
-
-        BookManagerErrorObject CheckOut(int customerId, Book book, int returnDateInterval);
-
+      
         BookManagerErrorObject Return(int customerId, string barCode, DateTime dateReturned);
 
     }
