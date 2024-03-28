@@ -4,6 +4,7 @@ using BookManager.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BookManager.Services.Interfaces;
+using System.Text.Json;
 namespace BookManager.API.Controllers
 {
     [Route("api/[controller]")]
@@ -23,6 +24,23 @@ namespace BookManager.API.Controllers
         {
             return Ok(_ibookManagerServices.GetAll());
             
+        }
+
+        [HttpPost]
+        public IActionResult Checkout(int CustomerId, Book book, int returnDateInterval)
+        {
+            
+           var checkoutProcess= _ibookManagerServices.CheckOut(CustomerId, book, returnDateInterval);
+            if (checkoutProcess.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                return StatusCode(400, JsonSerializer.Serialize(checkoutProcess.Errors));
+            }
+
+
         }
 
         [HttpPost]

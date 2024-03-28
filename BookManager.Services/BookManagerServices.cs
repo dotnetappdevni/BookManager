@@ -1,6 +1,7 @@
 ﻿using BookManager.Domain;
 using BookManager.Models;
 using BookManager.Services.Interfaces;
+using Microsoft.VisualBasic;
 using System.Collections.Generic;
 using System.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -97,34 +98,76 @@ namespace BookManager.Services
         {
             throw new System.NotImplementedException();
         }
+
+
         /// <summary>
         /// Searches to see if the book can be checked out and if there is suffient inventory
+        /// Also checks to see if the customer has already the same book checked out already.
         /// </summary>
         /// <param name="book"></param>
-        /// <returns></returns>
-        public int? CheckOut(Book book)
+        /// <returns>returns a BookManagerErrorObject object with details of success or failure</returns>
+        public BookManagerErrorObject CheckOut(int customerId, Book book, int returnDateInterval)
         {
-            var bookToCheckIn = _dbContext.BookInventories.FirstOrDefault(w => w.BarCode == book.BarCode);
-            if (bookToCheckIn != null)
+            BookManagerErrorObject errorObject = new BookManagerErrorObject();
+
+            var bookInventory = _dbContext.BookInventories
+                .FirstOrDefault(w => w.BarCode == book.BarCode && w.IsActive == true && !w.IsDeleted == false);
+
+            if (bookInventory != null)
             {
-                //check if the book is in stock to give out.
-                var checkInventoryCount = _dbContext.BookInventories.Where(w => w.BarCode == book.BarCode).FirstOrDefault().InventoryCount;
-                if (checkInventoryCount != 0)
+                // Check if the book is in stock to give out.
+                if (bookInventory.InventoryCount > 0)
                 {
-                    var inventoryToUpdate = _dbContext.BookInventories.Where(w => w.BarCode == book.BarCode).FirstOrDefault();
-                    if (inventoryToUpdate != null)
+                    var customerLoanedBooks = _dbContext.BooksLoand
+                        .Where(w => w.BarCode == book.BarCode && w.CustomerId == customerId && w.IsActive==true && w.IsDeleted==false)
+                        .ToList();
+
+                    if (customerLoanedBooks.Any())
                     {
-                        inventoryToUpdate.InventoryCount--;
-                        _dbContext.SaveChanges();
+                        errorObject.Succeeded = false;
+                        errorObject.Errors.Add("Customer already has checked out this book. Please ask them to return it.");
                     }
+                    else
+                    {
+                        // Update inventory count.
+                        bookInventory.InventoryCount--;
+                        _dbContext.SaveChanges();
 
+                        // Add book loan entry.
+                        var newLoan = new BooksLoand
+                        {
+                            BarCode = book.BarCode,
+                            CustomerId = customerId,
+                            DateBorrowed = DateTime.Now,
+                            DueDate = DateTime.Today.AddDays(returnDateInterval),
+                            Status = (int)Enums.BookstatusEnuum.Loaned,
+                            IsActive = true,
+                            IsDeleted = false
+                        };
+                        _dbContext.BooksLoand.Add(newLoan);
 
+                        try
+                        {
+                            _dbContext.SaveChanges();
+                            errorObject.Succeeded = true;
+                            errorObject.Messages.Add("Check Out Completed Successfully");
+                        }
+                        catch (Exception ex)
+                        {
+                            errorObject.Succeeded = false;
+                            errorObject.Exception = ex;
+                        }
+                    }
                 }
-               
             }
-            return 1;
+            else
+            {
+                errorObject.Succeeded = false;
+                errorObject.Errors.Add("Book not found in inventory.");
+            }
 
+            return errorObject;
         }
-    }
 
     }
+}

@@ -9,11 +9,13 @@ namespace BookManager.API.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
+        private readonly ILogger<BookManagerController> _logger;
 
         private readonly ICustomerService _customerService;
-        public CustomerController(ICustomerService customerService)
+        public CustomerController(ILogger<BookManagerController> logger,ICustomerService customerService)
         {
             _customerService = customerService;
+            _logger = logger;
         }
 
 

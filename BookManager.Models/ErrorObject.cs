@@ -16,6 +16,10 @@ namespace BookManager.Models
 
         public List<string> Errors { get; set; }
 
+        public List<string> Messages { get; set; }
+
         public Exception Exception { get; set; }
+
+        public Object Data { get; set; }
     }
 }
