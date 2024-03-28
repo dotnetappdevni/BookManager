@@ -2,19 +2,20 @@
 using BookManager.Domain;
 using BookManager.Models;
 using Microsoft.Extensions.Logging;
+using NLog;
 
 namespace BookManager.CustomerService
 {
     public class CustomerServices : ICustomerService
     {
         private readonly ApplicationDBContext _dbContext;
-        private readonly ILogger<CustomerServices> _logger;
+        private static readonly NLog.Logger _logger = LogManager.GetCurrentClassLogger();
 
 
-        public CustomerServices(ILogger<CustomerServices> logger,ApplicationDBContext dBContext) 
+        public CustomerServices(ApplicationDBContext dBContext) 
         {
             _dbContext = dBContext;
-            _logger = logger;
+           
         }
 
         /// <summary>
@@ -50,13 +51,13 @@ namespace BookManager.CustomerService
                 _dbContext.SaveChanges();
                 bookManagerErrorObject.Succeeded = true;
                 bookManagerErrorObject.Messages.Add("Customer Created Sucessfully");
-                _logger.LogInformation("Customer created sucessfully");
+                _logger.Info("Customer created sucessfully");
             }
             catch (Exception ex)
             {
                 bookManagerErrorObject.Succeeded = false;
                 bookManagerErrorObject.Exception = ex;
-                _logger.LogError("Exception occoured in the add customer method servce" , ex);
+                _logger.Error("Exception occoured in the add customer method servce" , ex);
             }
             _dbContext.SaveChanges();
             return bookManagerErrorObject;
@@ -77,7 +78,7 @@ namespace BookManager.CustomerService
                 _dbContext.SaveChanges();
                 bookManagerErrorObject.Succeeded = true;
                 bookManagerErrorObject.Messages.Add("Customer Deleted");
-                _logger.LogInformation("Customer Deleted sucessfully");
+                _logger.Info("Customer Deleted sucessfully");
 
             }
             catch (Exception ex)
@@ -85,7 +86,7 @@ namespace BookManager.CustomerService
                 bookManagerErrorObject.Succeeded = false;
                 bookManagerErrorObject.Errors.Add(ex.Message);
                 bookManagerErrorObject.Exception = ex;
-                _logger.LogError("Exception occoured in the delete customer method servce", ex);
+                _logger.Error("Exception occoured in the delete customer method servce", ex);
 
             }
             _dbContext.SaveChanges();

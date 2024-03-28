@@ -1,7 +1,8 @@
 ﻿using BookManager.Domain;
 using BookManager.Models;
 using BookManager.Services.Interfaces;
-using Microsoft.Extensions.Logging;
+
+using Microsoft.Identity.Client;
 using Microsoft.VisualBasic;
 using NLog;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace BookManager.Services
     {
         IBookManagerServices _ibookManagerServices;
         private readonly ApplicationDBContext _dbContext;
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly NLog.Logger _logger = LogManager.GetCurrentClassLogger();
  
         public BookManagerServices(ApplicationDBContext dbContext)
         {
@@ -141,6 +142,7 @@ namespace BookManager.Services
                             _dbContext.SaveChanges();
                             errorObject.Succeeded = true;
                             errorObject.Messages.Add("Check Out Completed Successfully");
+                            errorObject.Data = _dbContext.BookInventories.Where(w => w.BarCode == book.BarCode && w.IsActive == true && w.IsDeleted == false);
                         }
                         catch (Exception ex)
                         {

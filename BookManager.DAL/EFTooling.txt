@@ -1,5 +1,5 @@
 ﻿Be in the mian directory ie D:\GitForJobs\bookmanagerapi\bookmanagerapi.API
 
- dotnet ef migrations add NewTablesLocationetc --context ApplicationDBContext --output-dir Data\Migrations -p BookManager.DAL -s BookManager.API 
+ dotnet ef migrations add NewData --context ApplicationDBContext --output-dir Data\Migrations -p BookManager.DAL -s BookManager.API 
 
  dotnet ef database update --context ApplicationDBContext -p BookManager.DAL -s BookManager.API

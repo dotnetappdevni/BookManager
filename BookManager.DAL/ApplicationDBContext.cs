@@ -39,7 +39,7 @@ namespace BookManager.Domain
 
             modelBuilder.Entity<BookInventory>().HasData(new BookInventory { Id = 1,BookId= 3, BarCode = "1111", InventoryCount=10, DateCreated = DateTime.Now,IsActive = true,IsDeleted=false});
             modelBuilder.Entity<BookInventory>().HasData(new BookInventory { Id = 2, BookId = 4, BarCode = "3333", InventoryCount = 5, DateCreated = DateTime.Now, IsActive = true, IsDeleted = false });
-            modelBuilder.Entity<BookInventory>().HasData(new BookInventory { Id = 3, BookId = 5+, BarCode = "4444", InventoryCount = 9, DateCreated = DateTime.Now, IsActive = true, IsDeleted = false });
+            modelBuilder.Entity<BookInventory>().HasData(new BookInventory { Id = 3, BookId = 5, BarCode = "4444", InventoryCount = 9, DateCreated = DateTime.Now, IsActive = true, IsDeleted = false });
 
             // Add initial data
             modelBuilder.Entity<Book>().HasData(

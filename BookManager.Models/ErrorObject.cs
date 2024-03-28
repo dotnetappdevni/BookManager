@@ -14,6 +14,7 @@ namespace BookManager.Models
         {
             Messages = new List<string>();
             Errors = new List<string>();
+            Data = new object();
          
         }
         public bool Succeeded { get; set; }        
