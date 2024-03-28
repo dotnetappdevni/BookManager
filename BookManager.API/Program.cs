@@ -37,7 +37,7 @@ namespace BookManager
             builder.Services.AddSwaggerGen(c =>
             {
 
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TheHockeyLabMn", Version = "v1.1.61-beta" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "EDT", Version = "v1.1.2" });
                 //   c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
                 //Expose XML comments in doc.
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

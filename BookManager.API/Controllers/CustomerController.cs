@@ -1,5 +1,6 @@
 ﻿using BookManager.CustomerService.Interface;
 using BookManager.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 using System.Diagnostics.Eventing.Reader;
@@ -23,26 +24,33 @@ namespace BookManager.API.Controllers
            
         }
 
-
-        [HttpGet]
+        [HttpGet("GetAllCustomers")]
         public IActionResult GetAll()
         {
             return Ok(_customerService.GetAll());
             
         }
 
-        [HttpPost]
+        [HttpGet("GetCustomerById")] 
+
+        public IActionResult GetCustomerById(int id)
+        {
+            return Ok(_customerService.GetCustomerById(id));
+        }
+
+        [Authorize]
+        [HttpPost("AddCustomer")]
         public IActionResult Add(Customer customer)
         {
             var customerToAdd = _customerService.Add(customer);
             if (customerToAdd.Succeeded)
             {
                 return Ok(JsonSerializer.Serialize(customerToAdd.Messages));
-                _logger.Info($"Customer been created sucesfully");
+                _logger.Info($"Customer been created successfully");
             }
             else
             {
-                _logger.Error($"Exception occoured on Add Customer Method");
+                _logger.Error($"Exception occurred on Add Customer Method");
 
              return StatusCode(400, JsonSerializer.Serialize(customerToAdd.Errors));
 
@@ -50,10 +58,10 @@ namespace BookManager.API.Controllers
         }
 
 
-        [HttpDelete]
-        public IActionResult Delete(Customer customer)
+        [HttpDelete("DeleteCustomer")]
+        public IActionResult Delete(int customerId)  
         {
-            var customerToDelete = _customerService.Delete(customer);
+            var customerToDelete = _customerService.Delete(customerId);
             if (customerToDelete.Succeeded)
             {
                 _logger.Info($"Customer been deleted successfully!");
@@ -62,7 +70,7 @@ namespace BookManager.API.Controllers
             }
             else
             {
-                _logger.Error($"Exception has occoured in the Delete Customer Controller method",customerToDelete.Exception);
+                _logger.Error("Exception has occurred in the Delete Customer Controller method",customerToDelete.Exception);
                 return StatusCode(400, JsonSerializer.Serialize(customerToDelete.Errors));
 
             }

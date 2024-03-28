@@ -55,7 +55,6 @@ namespace BookManager.CustomerService
             catch (Exception ex)
             {
                 bookManagerErrorObject.Succeeded = false;
-                bookManagerErrorObject.Errors.Add(ex.Message);
                 bookManagerErrorObject.Exception = ex;
                 _logger.LogError("Exception occoured in the add customer method servce" , ex);
             }
@@ -68,12 +67,13 @@ namespace BookManager.CustomerService
         /// </summary>
         /// <param name="customer"></param>
         /// <returns>BookManagerErrorObject cuustom error object</returns>
-        public BookManagerErrorObject Delete(Customer customer)
+        public BookManagerErrorObject Delete(int customerId)
         {
            BookManagerErrorObject bookManagerErrorObject = new BookManagerErrorObject();
-            _dbContext.Customers.Remove(customer);
+            var customerToDelete= _dbContext.Customers.Find(customerId);
             try
             {
+                _dbContext.Customers.Remove(customerToDelete);
                 _dbContext.SaveChanges();
                 bookManagerErrorObject.Succeeded = true;
                 bookManagerErrorObject.Messages.Add("Customer Deleted");

@@ -15,7 +15,7 @@ namespace BookManager.CustomerService.Interface
 
         BookManagerErrorObject Add(Customer customer);
 
-        BookManagerErrorObject Delete(Customer customer);
+        BookManagerErrorObject Delete(int customerId);
 
     }
 }

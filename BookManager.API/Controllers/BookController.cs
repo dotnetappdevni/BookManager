@@ -6,32 +6,39 @@ using Microsoft.AspNetCore.Mvc;
 using BookManager.Services.Interfaces;
 using System.Text.Json;
 using NLog;
+using Microsoft.AspNetCore.Authorization;
 namespace BookManager.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookManagerController : ControllerBase
+    public class BookController : ControllerBase
     {
         IBookManagerServices _ibookManagerServices;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public BookManagerController(IBookManagerServices ibookManagerServices)
+        public BookController(IBookManagerServices ibookManagerServices)
         {
             _ibookManagerServices = ibookManagerServices;
         }
-
-        [HttpGet]
+        
+        [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             return Ok(_ibookManagerServices.GetAll());
             
         }
 
-        [HttpPost]
+        [HttpGet("GetBookById")]
+        public IActionResult GetBookById(int id)
+        {
+            return Ok(_ibookManagerServices.GetById(id));
+        }
+
+        [HttpPost("Checkout")]
         public IActionResult Checkout(int CustomerId, Book book, int returnDateInterval)
         {
             
-           var checkoutProcess= _ibookManagerServices.CheckOut(CustomerId, book, returnDateInterval);
+            var checkoutProcess= _ibookManagerServices.CheckOut(CustomerId, book, returnDateInterval);
             if (checkoutProcess.Succeeded)
             {
                 return Ok(JsonSerializer.Serialize(checkoutProcess.Messages));
@@ -42,7 +49,8 @@ namespace BookManager.API.Controllers
             }
         }
 
-        [HttpPost]
+        
+        [HttpPost("AddBook")]
         public IActionResult AddBook(Book book)
         {
             var bookToAdd = _ibookManagerServices.Add(book);
@@ -56,15 +64,14 @@ namespace BookManager.API.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest, bookToAdd.Errors);
             }            
         }
-
-        [HttpDelete]
+        
+        [HttpDelete("DeleteBook")]
         public IActionResult Delete(Book book)
         {
             var bookTodelete = _ibookManagerServices.Delete(book);
             if (bookTodelete.Succeeded)
             {
                 return Ok();
-
             }
             else
             {
