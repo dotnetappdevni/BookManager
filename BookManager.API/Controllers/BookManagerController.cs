@@ -33,7 +33,7 @@ namespace BookManager.API.Controllers
            var checkoutProcess= _ibookManagerServices.CheckOut(CustomerId, book, returnDateInterval);
             if (checkoutProcess.Succeeded)
             {
-                return Ok();
+                return Ok(JsonSerializer.Serialize(checkoutProcess.Messages));
             }
             else
             {
