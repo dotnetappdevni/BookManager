@@ -13,7 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookManager.DAL", "BookMana
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookManager.Models", "BookManager.Models\BookManager.Models.csproj", "{23954101-5F58-49CF-AE2D-A38334204745}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookManager.Tests", "BookManager.Tests\BookManager.Tests.csproj", "{7BCBA2F6-7D51-4D6E-927B-14F81338C9EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookManager.Tests", "BookManager.Tests\BookManager.Tests.csproj", "{7BCBA2F6-7D51-4D6E-927B-14F81338C9EC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{42803FCB-6229-4C61-8F83-C43E4C1980ED}"
+	ProjectSection(SolutionItems) = preProject
+		dotnet.yaml = dotnet.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
