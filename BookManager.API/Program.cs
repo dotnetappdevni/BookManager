@@ -15,6 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Runtime.CompilerServices;
 using NLog.Web;
 using NLog.Extensions.Logging;
+using BookManager.API;
+using Microsoft.AspNetCore.Identity.UI.Services;
 namespace BookManager
 {
     public class Program
@@ -73,6 +75,10 @@ namespace BookManager
                 loggingBuilder.ClearProviders();
                 loggingBuilder.AddNLog();
             });
+
+            builder.Services.AddFluentEmail(builder.Configuration);
+            builder.Services.AddTransient<IEmailService, EmailService>();
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
 
             builder.Services.AddScoped<ICustomerService, CustomerServices>();
             builder.Services.AddScoped<IBookManagerServices, BookManagerServices>();
