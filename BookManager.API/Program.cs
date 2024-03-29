@@ -17,6 +17,8 @@ using NLog.Web;
 using NLog.Extensions.Logging;
 using BookManager.API;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using BookManager.GenServices.Interface;
+using BookManager.GenServices;
 namespace BookManager
 {
     public class Program

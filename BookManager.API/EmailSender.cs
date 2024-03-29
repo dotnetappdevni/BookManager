@@ -1,5 +1,6 @@
 ﻿using BookManager.CustomerService;
 using BookManager.CustomerService.Interface;
+using BookManager.GenServices.Interface;
 using BookManager.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
 

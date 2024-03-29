@@ -110,13 +110,12 @@ For Example :
    If you remove the json generated and replace with this it will allow you to 
    login in and get a jwt token.
 
-   {
-   "email": "ADMIN@EDT.COM",
-   "password": "Test12345!@",
-   "twoFactorCode": "string",
-   "twoFactorRecoveryCode": "string"
-   }
-
+{
+  "email": "edt@dotnetappdevni.com",
+  "password": "Test12345!@",
+  "twoFactorCode": "string",
+  "twoFactorRecoveryCode": "string"
+}
    One You have logged in the swagger will produce a jwt berrer token.
 
    Once you have got the token click the authorise  button on the main swagger screen
@@ -147,3 +146,11 @@ For Example :
 
 
   This is for the password resets and what not form the identity api.
+
+  You can also setup a local smpt dev instance by using the following
+
+  dotnet tool install -g Rnwood.Smtp4dev
+
+  you can run the tool by runing command in the package manager console
+
+  smtp4dev 

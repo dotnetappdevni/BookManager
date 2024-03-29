@@ -1,4 +1,4 @@
-﻿using BookManager.CustomerService.Interface;
+﻿using BookManager.GenServices.Interface;
 using BookManager.Models;
 using FluentEmail.Core;
 using Microsoft.Extensions.Logging;
@@ -9,14 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookManager.CustomerService
+namespace BookManager.GenServices
 {
     public class EmailService : IEmailService
     {
         private static readonly NLog.Logger _logger = LogManager.GetCurrentClassLogger();
-        private readonly FluentEmailFactory _fluentEmailFactory;
+        private readonly IFluentEmailFactory _fluentEmailFactory;
 
-        public EmailService(FluentEmailFactory fluentEmailFactory)
+        public EmailService(IFluentEmailFactory fluentEmailFactory)
         {
 
             _fluentEmailFactory = fluentEmailFactory;

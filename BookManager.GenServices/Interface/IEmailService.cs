@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookManager.CustomerService.Interface
+namespace BookManager.GenServices.Interface
 {
     public interface IEmailService
     {

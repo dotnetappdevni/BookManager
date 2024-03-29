@@ -6,6 +6,7 @@ using System.Xml;
 using Microsoft.Extensions.Configuration;
 using BookManager.DAL;
 using System.Reflection.Emit;
+using static BookManager.Models.Enums;
 
 namespace BookManager.Domain
 {
@@ -43,7 +44,7 @@ namespace BookManager.Domain
 
             // Add initial data
             modelBuilder.Entity<Book>().HasData(
-               new Book { Id = 3, ISBN = "329-320-2392-1", BarCode = "1111", Title = "Star Trek - Beyond", Description = "After stopping off at Starbase Yorktown, a remote outpost on the fringes of Federation space, the USS Enterprise, halfway into their five-year mission, is destroyed by an unstoppable wave of unknown aliens.", IsDeleted = false, IsActive = true, DateCreated = DateTime.Now, DateModified = DateTime.Now, Type = 1, Price = 15.99m },
+               new Book { Id = 3, ISBN = "329-320-2392-1", BarCode = "1111", Genre = (int)BookGenreEnum.ScienceFiction, Title = "Star Trek - Beyond", Description = "After stopping off at Starbase Yorktown, a remote outpost on the fringes of Federation space, the USS Enterprise, halfway into their five-year mission, is destroyed by an unstoppable wave of unknown aliens.", IsDeleted = false, IsActive = true, DateCreated = DateTime.Now, DateModified = DateTime.Now, Type = 1, Price = 15.99m },
            new Book
            {
                Id = 4,
@@ -55,7 +56,7 @@ namespace BookManager.Domain
                IsActive = true,
                DateCreated = DateTime.Now,
                DateModified = DateTime.Now,
-               Type = 1,
+               Genre = (int)BookGenreEnum.ScienceFiction,
                Price = 10.99m
            },
              new Book
@@ -68,8 +69,8 @@ namespace BookManager.Domain
                  IsDeleted = false,
                  IsActive = true,
                  DateCreated = DateTime.Now,
-                 DateModified = DateTime.Now,
-                 Type = 1,
+                 DateModified = DateTime.Now,               
+                 Genre = (int)BookGenreEnum.ScienceFiction,
                  Price = 16.00m
              });
 
@@ -86,21 +87,19 @@ namespace BookManager.Domain
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
             { Id = "8cc980c3-8643-4166-8dcb-de924036ec6b", Name = "Staff", NormalizedName = "Staff".ToUpper() });
 
-
-
             //a hasher to hash the password before seeding the user to the db
             var hasher = new PasswordHasher<IdentityUser>();
-
 
             //Seeding the Admin user to AspNetUsers table
             modelBuilder.Entity<IdentityUser>().HasData(
                 new IdentityUser
                 {
                     Id = "8e445865-a24d-4543-a6c6-9443d048cdb9", // primary key
-                    UserName = "Admin",
-                    Email ="Admin@EDT.COM",
-                    NormalizedEmail ="ADMIN@EDT.COM",
+                    UserName = "edt@dotnetappdevni.com",
+                    Email = "edt@dotnetappdevni.com",
+                    NormalizedEmail = "EDT@DOTNETAPPDEVNI.COM",
                     NormalizedUserName = "ADMIN",
+                    LockoutEnabled = false,
                     PasswordHash = hasher.HashPassword(null, "Test12345!@")
                 }
             );
@@ -114,7 +113,7 @@ namespace BookManager.Domain
       );
 
 
-            //Seeding the relation staff Memeber between our user and role to AspNetUserRoles table
+            //Seeding the relation staff Member between our user and role to AspNetUserRoles table
 
             modelBuilder.Entity<IdentityUser>().HasData(
              new IdentityUser
