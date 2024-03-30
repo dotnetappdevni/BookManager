@@ -1,6 +1,6 @@
 
 using BookManager.CustomerService.Interface;
-using BookManager.Domain;
+using BookManager.DAL;
 using BookManager.Services;
 using BookManager.Services.Interfaces;
 using Microsoft.AspNetCore.Components.Authorization;

@@ -1,5 +1,5 @@
 ﻿using BookManager.CustomerService.Interface;
-using BookManager.Domain;
+using BookManager.DAL;
 using BookManager.Models;
 using Microsoft.Extensions.Logging;
 using NLog;

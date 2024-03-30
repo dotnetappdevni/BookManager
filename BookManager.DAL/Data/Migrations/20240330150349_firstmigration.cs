@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace BookManager.DAL.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstDb : Migration
+    public partial class firstmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,6 +53,26 @@ namespace BookManager.DAL.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BookInventories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BookId = table.Column<int>(type: "int", nullable: false),
+                    BarCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InventoryCount = table.Column<int>(type: "int", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateDeleted = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookInventories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Books",
                 columns: table => new
                 {
@@ -62,7 +84,7 @@ namespace BookManager.DAL.Data.Migrations
                     ISBN = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Genre = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,3)", nullable: false),
                     Condition = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
@@ -76,20 +98,45 @@ namespace BookManager.DAL.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BooksLoaned",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    BarCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BookId = table.Column<int>(type: "int", nullable: false),
+                    DateBorrowed = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateReturned = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateDeleted = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BooksLoaned", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Customers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Forename = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Forename = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address5 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     County = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PostCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -102,6 +149,27 @@ namespace BookManager.DAL.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ref_Categorys",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GroupId = table.Column<int>(type: "int", nullable: true),
+                    Type = table.Column<int>(type: "int", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateDeleted = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ref_Categorys", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -210,6 +278,91 @@ namespace BookManager.DAL.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Locations",
+                columns: table => new
+                {
+                    BookId = table.Column<int>(type: "int", nullable: false),
+                    ShelfNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Row = table.Column<int>(type: "int", nullable: false),
+                    Position = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateDeleted = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locations", x => x.BookId);
+                    table.ForeignKey(
+                        name: "FK_Locations_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "2c5e174e-3b0e-446f-86af-483d56fd7210", null, "Administrator", "ADMINISTRATOR" },
+                    { "8cc980c3-8643-4166-8dcb-de924036ec6b", null, "Staff", "STAFF" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "8e445865-a24d-4543-a6c6-9443d048cdb9", 0, "252940e1-ba66-461c-b059-426773c5b71a", "edt@dotnetappdevni.com", false, false, null, "EDT@DOTNETAPPDEVNI.COM", "ADMIN", "AQAAAAIAAYagAAAAEN0VCsTymU4NL4t9x0BpND2MB6mBKaoPx39VB9dSYuugwQWg1cHzQBvEAhox8KLQkQ==", null, false, "b9fbfe1f-5dbf-47c3-a4e4-686bc97d1308", false, "edt@dotnetappdevni.com" },
+                    { "d18e858a-c38d-4083-99b6-c5697b81d7cd", 0, "c2312b70-9862-4a9a-a84e-335e27851b9d", "Staff@EDT.COM", false, false, null, "STAFF@EDT.COM", "STAFF", "AQAAAAIAAYagAAAAEJFHHgQm1UjfjefqwFkQwAHaxg/Yk0SSodye9Vc8mU1tclRCjEuvIID/r19sxWCUrQ==", null, false, "1a749700-1480-4ae7-89b2-77db5f2b0627", false, "Staff" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "BookInventories",
+                columns: new[] { "Id", "BarCode", "BookId", "DateCreated", "DateDeleted", "DateModified", "InventoryCount", "IsActive", "IsDeleted" },
+                values: new object[,]
+                {
+                    { 3, "1111", 3, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(614), null, null, 10, true, false },
+                    { 4, "3333", 4, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(684), null, null, 5, true, false },
+                    { 5, "4444", 5, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(710), null, null, 9, true, false }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Books",
+                columns: new[] { "Id", "BarCode", "Condition", "DateCreated", "DateDeleted", "DateModified", "Description", "Genre", "ISBN", "IsActive", "IsDeleted", "Price", "Title", "Type" },
+                values: new object[,]
+                {
+                    { 3, "1111", 0, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(732), null, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(734), "After stopping off at Starbase Yorktown, a remote outpost on the fringes of Federation space, the USS Enterprise, halfway into their five-year mission, is destroyed by an unstoppable wave of unknown aliens.", 6, "329-320-2392-1", true, false, 15.99m, "Star Trek - Beyond", 1 },
+                    { 4, "3333", 0, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(740), null, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(742), "The novelization of the \"First Contact\" film which also includes a behind-the-scenes look at the making of the film. Captain Pickard, Commander Riker, Lieutenant Commander Data and the rest of the crew must face their greatest foe, the half-organic, half-mechanical Borg..", 6, "978-0-671-56743-1", true, false, 10.99m, "Star Trek - First Contact", 0 },
+                    { 5, "4444", 0, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(746), null, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(749), "Landing on Earth, the Doctor finds a stranded alien in need of protection – and is dragged headlong into the life of his old friend Donna Noble, knowing that if she ever remembers their time together, she will die…", 6, "978-1-84607-571-7", true, false, 16.00m, "Doctor Who: The Star Beast ", 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Customers",
+                columns: new[] { "Id", "Address1", "Address2", "Address3", "Address4", "Address5", "Country", "County", "DateCreated", "DateDeleted", "DateModified", "Email", "Forename", "IsActive", "IsDeleted", "MiddleName", "Notes", "PostCode", "Surname" },
+                values: new object[,]
+                {
+                    { 10, null, null, null, null, null, null, null, null, null, null, null, "The", true, false, null, null, null, "Doctor" },
+                    { 11, null, null, null, null, null, null, null, null, null, null, null, "Martha", true, false, null, null, null, "Jones" },
+                    { 12, null, null, null, null, null, null, null, null, null, null, null, "Amy", true, false, null, null, null, "Pond" },
+                    { 13, null, null, null, null, null, null, null, null, null, null, null, "River", true, false, null, null, null, "Song" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { "2c5e174e-3b0e-446f-86af-483d56fd7210", "8e445865-a24d-4543-a6c6-9443d048cdb9" },
+                    { "8cc980c3-8643-4166-8dcb-de924036ec6b", "d18e858a-c38d-4083-99b6-c5697b81d7cd" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -269,16 +422,28 @@ namespace BookManager.DAL.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Books");
+                name: "BookInventories");
+
+            migrationBuilder.DropTable(
+                name: "BooksLoaned");
 
             migrationBuilder.DropTable(
                 name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
+
+            migrationBuilder.DropTable(
+                name: "Ref_Categorys");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Books");
         }
     }
 }

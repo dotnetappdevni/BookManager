@@ -8,7 +8,7 @@ using BookManager.DAL;
 using System.Reflection.Emit;
 using static BookManager.Models.Enums;
 
-namespace BookManager.Domain
+namespace BookManager.DAL
 {
     public class ApplicationDBContext : IdentityDbContext<IdentityUser>
     {
