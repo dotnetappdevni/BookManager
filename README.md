@@ -123,13 +123,14 @@ eg
 
    If you remove the json generated and replace with this it will allow you to 
    login in and get a jwt token.
-
+```
 {
-  "email": "edt@dotnetappdevni.com",
+  "email": "admin@edt.com",
   "password": "Test12345!@",
   "twoFactorCode": "string",
   "twoFactorRecoveryCode": "string"
 }
+```
    One You have logged in the swagger will produce a jwt berrer token.
 
    Once you have got the token click the authorise  button on the main swagger screen
@@ -214,3 +215,10 @@ Note: Do NOT forget that if you do register a new user u need to
 configure a smtp server via app settings or use 
 paper cut as recommended above as you need to verify the 
 activation link.
+
+While not part of the assignment I hosted it online here on 
+my own hosting.
+
+Just to prove am capable of deploying to a server enviorment.
+
+[https://api-edt.dotnetappdevni.com/swagger/index.html](https://api-edt.dotnetappdevni.com/swagger/index.html)
