@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookManager.DAL.Data.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240331050408_firstmigration")]
+    [Migration("20240331053000_firstmigration")]
     partial class firstmigration
     {
         /// <inheritdoc />
@@ -86,8 +86,8 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 3,
                             BarCode = "1111",
                             Condition = 0,
-                            DateCreated = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8655),
-                            DateModified = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8657),
+                            DateCreated = new DateTime(2024, 3, 31, 6, 29, 58, 174, DateTimeKind.Local).AddTicks(6899),
+                            DateModified = new DateTime(2024, 3, 31, 6, 29, 58, 174, DateTimeKind.Local).AddTicks(6900),
                             Description = "After stopping off at Starbase Yorktown, a remote outpost on the fringes of Federation space, the USS Enterprise, halfway into their five-year mission, is destroyed by an unstoppable wave of unknown aliens.",
                             Genre = 6,
                             ISBN = "329-320-2392-1",
@@ -102,8 +102,8 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 4,
                             BarCode = "3333",
                             Condition = 0,
-                            DateCreated = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8662),
-                            DateModified = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8664),
+                            DateCreated = new DateTime(2024, 3, 31, 6, 29, 58, 174, DateTimeKind.Local).AddTicks(6907),
+                            DateModified = new DateTime(2024, 3, 31, 6, 29, 58, 174, DateTimeKind.Local).AddTicks(6909),
                             Description = "The novelization of the \"First Contact\" film which also includes a behind-the-scenes look at the making of the film. Captain Pickard, Commander Riker, Lieutenant Commander Data and the rest of the crew must face their greatest foe, the half-organic, half-mechanical Borg..",
                             Genre = 6,
                             ISBN = "978-0-671-56743-1",
@@ -118,8 +118,8 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 5,
                             BarCode = "4444",
                             Condition = 0,
-                            DateCreated = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8667),
-                            DateModified = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8668),
+                            DateCreated = new DateTime(2024, 3, 31, 6, 29, 58, 174, DateTimeKind.Local).AddTicks(6912),
+                            DateModified = new DateTime(2024, 3, 31, 6, 29, 58, 174, DateTimeKind.Local).AddTicks(6942),
                             Description = "Landing on Earth, the Doctor finds a stranded alien in need of protection – and is dragged headlong into the life of his old friend Donna Noble, knowing that if she ever remembers their time together, she will die…",
                             Genre = 6,
                             ISBN = "978-1-84607-571-7",
@@ -173,7 +173,7 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 3,
                             BarCode = "1111",
                             BookId = 3,
-                            DateCreated = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8560),
+                            DateCreated = new DateTime(2024, 3, 31, 6, 29, 58, 174, DateTimeKind.Local).AddTicks(6781),
                             InventoryCount = 10,
                             IsActive = true,
                             IsDeleted = false
@@ -183,7 +183,7 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 4,
                             BarCode = "3333",
                             BookId = 4,
-                            DateCreated = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8622),
+                            DateCreated = new DateTime(2024, 3, 31, 6, 29, 58, 174, DateTimeKind.Local).AddTicks(6852),
                             InventoryCount = 5,
                             IsActive = true,
                             IsDeleted = false
@@ -193,7 +193,7 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 5,
                             BarCode = "4444",
                             BookId = 5,
-                            DateCreated = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8634),
+                            DateCreated = new DateTime(2024, 3, 31, 6, 29, 58, 174, DateTimeKind.Local).AddTicks(6878),
                             InventoryCount = 9,
                             IsActive = true,
                             IsDeleted = false
@@ -467,12 +467,6 @@ namespace BookManager.DAL.Data.Migrations
                             Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
-                        },
-                        new
-                        {
-                            Id = "8cc980c3-8643-4166-8dcb-de924036ec6b",
-                            Name = "Staff",
-                            NormalizedName = "STAFF"
                         });
                 });
 
@@ -570,33 +564,17 @@ namespace BookManager.DAL.Data.Migrations
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "29e495fe-dd66-40ca-ba1d-70691b4a2b7c",
+                            ConcurrencyStamp = "4fdf8ed0-1655-4bf2-bec3-6591e988c6cc",
                             Email = "admin@edt.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EDT.COM",
                             NormalizedUserName = "admin@edt.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAw8vCfoZhluTKnauZbg+Yo89uWEUBDVZHev/KF1vSidMcKleC31SfpslOtr1+wyQA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEO+KmgK1JLXs/C453tofHV/I7w76i6jFnP5PWm/ymDMy0Bz9OcZ44CAlVCcoe/oyoQ==",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "6c668063-ec3f-44b5-b123-272d261acaef",
+                            SecurityStamp = "7c38d49b-af2f-4231-bedc-a97a58fcfcc3",
                             TwoFactorEnabled = false,
                             UserName = "admin@edt.com"
-                        },
-                        new
-                        {
-                            Id = "d18e858a-c38d-4083-99b6-c5697b81d7cd",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "53aa43ab-4e9d-4607-be95-8d6eee1c7a13",
-                            Email = "Staff@EDT.COM",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "STAFF@EDT.COM",
-                            NormalizedUserName = "STAFF",
-                            PasswordHash = "AQAAAAIAAYagAAAAECKEG44FthtYyn9zO7ZmEbXuok3Po9XUarl4mIqOzApiTg9NIUWd75BXXOD8bT6Q4Q==",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "dfdfa715-7cae-4f48-996e-6ee74e71d6c8",
-                            TwoFactorEnabled = false,
-                            UserName = "Staff"
                         });
                 });
 
@@ -666,11 +644,6 @@ namespace BookManager.DAL.Data.Migrations
                         {
                             UserId = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7210"
-                        },
-                        new
-                        {
-                            UserId = "d18e858a-c38d-4083-99b6-c5697b81d7cd",
-                            RoleId = "8cc980c3-8643-4166-8dcb-de924036ec6b"
                         });
                 });
 
