@@ -56,7 +56,7 @@ namespace BookManager.Services
             {
                 List<string> errors = new List<string>();
                 errors.Add(ex.Message);
-                bookManagerErrorObject = new BookManagerErrorObject { Succeeded = false, Errors = errors, Exception = ex };
+                bookManagerErrorObject = new BookManagerErrorObject { Succeeded = false, ExceptionErrors = errors, Exception = ex };
                 _logger.Error("Exception has occurred in the bookmanager service Add Book method ", ex);
 
             }
@@ -75,21 +75,29 @@ namespace BookManager.Services
             var bookToUpdate = _dbContext.Books.Where(w => w.Id == book.Id && w.IsDeleted == false && w.IsActive == true).FirstOrDefault();
             if (bookToUpdate != null)
             {
-                _dbContext.Entry(book).CurrentValues.SetValues(book);
+                _dbContext.Entry(bookToUpdate).CurrentValues.SetValues(book);
                 try
                 {
-                    _dbContext.SaveChanges();
-                    bookManagerErrorObject.Errors.Add($"Book has been updated successfully {book.Id}");
-                    bookManagerErrorObject.Succeeded = true;
-                    _logger.Info($"Book has been updated successfully {book.Id}");
-                    _logger.Info($"Exited the update book method {book.Id}");
+                    
+                        _dbContext.SaveChanges();
+                        bookManagerErrorObject.Messages.Add($"Book has been updated successfully {book.Id}");
+                        bookManagerErrorObject.Succeeded = true;
+                        bookManagerErrorObject.Data = _dbContext.Books.Where(w => w.Id == book.Id && w.IsDeleted == false && w.IsActive == true).FirstOrDefault(); ;
+                        _logger.Info($"Book has been updated successfully {book.Id}");
+                        _logger.Info($"Exited the update book method {book.Id}");
                 }
                 catch (Exception ex)
                 {
-                    bookManagerErrorObject.Errors.Add("Exception occurred in Update Book Method ");
+                    bookManagerErrorObject.ExceptionErrors.Add("Exception occurred in Update Book Method ");
                     bookManagerErrorObject.Exception = ex;
                     bookManagerErrorObject.Succeeded = false;
                 }
+
+            }
+            else
+            {
+                bookManagerErrorObject.Errors.Add(new Models.Error { Field = "errorMessage", Message = "Book cannot be updated ensure correct book id is used." });
+                bookManagerErrorObject.Succeeded = false;
 
             }
             return bookManagerErrorObject;
@@ -124,11 +132,16 @@ namespace BookManager.Services
                 {
                     List<string> errors = new List<string>();
                     errors.Add(ex.Message);
-                    bookManagerErrorObject = new BookManagerErrorObject { Succeeded = false, Errors = errors, Exception = ex };
+                    bookManagerErrorObject = new BookManagerErrorObject { Succeeded = false, ExceptionErrors = errors, Exception = ex };
                     _logger.Info($"Book Deleted Failed {book.Title} Book Id={book.Id}");
 
                 }
 
+            }
+            else
+            {
+                bookManagerErrorObject.Errors.Add(new Models.Error { Field = "errorMessage", Message = "Book could not be found we cannot update record. Please ensure id was passed" });
+                bookManagerErrorObject.Succeeded=false;
             }
             return bookManagerErrorObject;
 
@@ -178,7 +191,7 @@ namespace BookManager.Services
                         catch (Exception ex)
                         {
                             _logger.Info($"Exception occurred on check in of a book {bookId} for customer {customerId} increasing inventory count");
-                            bookManagerErrorObject.Errors.Add("Failed to increase inventory count");
+                            bookManagerErrorObject.ExceptionErrors.Add("Failed to increase inventory count");
                             bookManagerErrorObject.Succeeded = false;
 
                         }
@@ -190,7 +203,7 @@ namespace BookManager.Services
                     catch (Exception ex)
                     {
                         _logger.Info($"Exception occurred on check in of a book {bookId} for customer {customerId}");
-                        bookManagerErrorObject.Errors.Add("Exception occurred on check in of book");
+                        bookManagerErrorObject.ExceptionErrors.Add("Exception occurred on check in of book");
                         bookManagerErrorObject.Succeeded = false;
                         bookManagerErrorObject.Exception = ex;
                     }
@@ -209,7 +222,7 @@ namespace BookManager.Services
                 {
                     _logger.Info($"Exception occurred on check in of a book {bookId} for customer {customerId}");
 
-                    bookManagerErrorObject.Errors.Add($"Reducing Inventory count failed for customer {customerId} and book id {bookId}");
+                    bookManagerErrorObject.ExceptionErrors.Add($"Reducing Inventory count failed for customer {customerId} and book id {bookId}");
                     bookManagerErrorObject.Succeeded = false;
                     bookManagerErrorObject.Exception = ex;
                 }
@@ -243,7 +256,7 @@ namespace BookManager.Services
                     if (customerLoanedBooks.Any())
                     {
                         bookManagerErrorObject.Succeeded = false;
-                        bookManagerErrorObject.Errors.Add("Customer already has checked out this book. Please ask them to return it.");
+                        bookManagerErrorObject.ExceptionErrors.Add("Customer already has checked out this book. Please ask them to return it.");
                     }
                     else
                     {
@@ -285,7 +298,7 @@ namespace BookManager.Services
             else
             {
                 bookManagerErrorObject.Succeeded = false;
-                bookManagerErrorObject.Errors.Add("Book not found in inventory.");
+                bookManagerErrorObject.ExceptionErrors.Add("Book not found in inventory.");
             }
 
             return bookManagerErrorObject;

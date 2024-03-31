@@ -3,6 +3,7 @@ using BookManager.DAL;
 using BookManager.Models;
 using Microsoft.Extensions.Logging;
 using NLog;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BookManager.CustomerService
 {
@@ -72,7 +73,7 @@ namespace BookManager.CustomerService
 
             try
             {
-                var customerToUpdate = _dbContext.Customers.Where(w => w.Id == customer.Id).FirstOrDefault();
+                var customerToUpdate = _dbContext.Customers.Where(w => w.Id == customer.Id && w.IsActive==true  && w.IsDeleted==false).FirstOrDefault();
                 if (customerToUpdate != null)
                 {
                     _dbContext.Entry(customerToUpdate).CurrentValues.SetValues(customer);
@@ -88,19 +89,26 @@ namespace BookManager.CustomerService
                     catch (Exception ex)
                     {
                         bookManagerErrorObject.Succeeded = false;
-                        bookManagerErrorObject.Errors.Add($"Exception occoured while updating customer {customer.Id}");
+                        bookManagerErrorObject.ExceptionErrors.Add($"Exception occurred while updating customer {customer.Id}");
                         bookManagerErrorObject.Exception = ex;
                         _logger.Error("Exception occurred in the Update customer method service", ex);
 
 
                     }
+                }else
+                {
+
+                    bookManagerErrorObject.Errors.Add(new Models.Error { Field = "errorMessage", Message = "Customer Not Found please ensure customer Id correct." });
+                    bookManagerErrorObject.Succeeded = false;
                 }
+
             }
 
             catch (Exception ex)
             {
                 bookManagerErrorObject.Succeeded = false;
-                bookManagerErrorObject.Errors.Add($"Exception occurred while updating customer {customer.Id}");
+
+                bookManagerErrorObject.ExceptionErrors.Add($"Exception occurred while updating customer {customer.Id}");
                 bookManagerErrorObject.Exception = ex;
                 _logger.Error("Exception occurred in the Update customer method service", ex);
 
@@ -121,22 +129,34 @@ namespace BookManager.CustomerService
             BookManagerErrorObject bookManagerErrorObject = new BookManagerErrorObject();
             var customerToDelete = _dbContext.Customers.Find(customerId);
             _logger.Error("Entered the Delete customer method  ");
-            try
+            if (customerToDelete != null)
             {
-                _dbContext.Customers.Remove(customerToDelete);
-                _dbContext.SaveChanges();
-                bookManagerErrorObject.Succeeded = true;
-                bookManagerErrorObject.Messages.Add("Customer Deleted");
-                _logger.Info("Customer Deleted successfully");
-                _logger.Error("Exited the Delete customer method  ");
+                try
+                {
+                    _dbContext.Customers.Remove(customerToDelete);
+                    _dbContext.SaveChanges();
+                    bookManagerErrorObject.Succeeded = true;
+                    bookManagerErrorObject.Messages.Add("Customer Deleted");
+                    _logger.Info("Customer Deleted successfully");
+                    _logger.Error("Exited the Delete customer method  ");
 
+                }
+                catch (Exception ex)
+                {
+                    bookManagerErrorObject.Succeeded = false;
+                    bookManagerErrorObject.ExceptionErrors.Add(ex.Message);
+                    
+                    bookManagerErrorObject.Exception = ex;
+                    _logger.Error("Exception occurred in the Delete customer method service", ex);
+
+                }
             }
-            catch (Exception ex)
+            else
             {
+                bookManagerErrorObject.Errors.Add(new Models.Error { Field = "errorMessage", Message = "Customer Not Found please ensure customer Id correct." });
                 bookManagerErrorObject.Succeeded = false;
-                bookManagerErrorObject.Errors.Add(ex.Message);
-                bookManagerErrorObject.Exception = ex;
-                _logger.Error("Exception occurred in the Delete customer method service", ex);
+                
+
 
             }
             return bookManagerErrorObject;

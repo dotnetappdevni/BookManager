@@ -106,6 +106,7 @@ namespace BookManager.DAL.Data.Migrations
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     BarCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BookId = table.Column<int>(type: "int", nullable: false),
+                    IsReturned = table.Column<bool>(type: "bit", nullable: true),
                     DateBorrowed = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DateReturned = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -319,8 +320,8 @@ namespace BookManager.DAL.Data.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "8e445865-a24d-4543-a6c6-9443d048cdb9", 0, "252940e1-ba66-461c-b059-426773c5b71a", "edt@dotnetappdevni.com", false, false, null, "EDT@DOTNETAPPDEVNI.COM", "ADMIN", "AQAAAAIAAYagAAAAEN0VCsTymU4NL4t9x0BpND2MB6mBKaoPx39VB9dSYuugwQWg1cHzQBvEAhox8KLQkQ==", null, false, "b9fbfe1f-5dbf-47c3-a4e4-686bc97d1308", false, "edt@dotnetappdevni.com" },
-                    { "d18e858a-c38d-4083-99b6-c5697b81d7cd", 0, "c2312b70-9862-4a9a-a84e-335e27851b9d", "Staff@EDT.COM", false, false, null, "STAFF@EDT.COM", "STAFF", "AQAAAAIAAYagAAAAEJFHHgQm1UjfjefqwFkQwAHaxg/Yk0SSodye9Vc8mU1tclRCjEuvIID/r19sxWCUrQ==", null, false, "1a749700-1480-4ae7-89b2-77db5f2b0627", false, "Staff" }
+                    { "8e445865-a24d-4543-a6c6-9443d048cdb9", 0, "29e495fe-dd66-40ca-ba1d-70691b4a2b7c", "admin@edt.com", true, false, null, "ADMIN@EDT.COM", "admin@edt.com", "AQAAAAIAAYagAAAAEAw8vCfoZhluTKnauZbg+Yo89uWEUBDVZHev/KF1vSidMcKleC31SfpslOtr1+wyQA==", null, true, "6c668063-ec3f-44b5-b123-272d261acaef", false, "admin@edt.com" },
+                    { "d18e858a-c38d-4083-99b6-c5697b81d7cd", 0, "53aa43ab-4e9d-4607-be95-8d6eee1c7a13", "Staff@EDT.COM", true, false, null, "STAFF@EDT.COM", "STAFF", "AQAAAAIAAYagAAAAECKEG44FthtYyn9zO7ZmEbXuok3Po9XUarl4mIqOzApiTg9NIUWd75BXXOD8bT6Q4Q==", null, true, "dfdfa715-7cae-4f48-996e-6ee74e71d6c8", false, "Staff" }
                 });
 
             migrationBuilder.InsertData(
@@ -328,9 +329,9 @@ namespace BookManager.DAL.Data.Migrations
                 columns: new[] { "Id", "BarCode", "BookId", "DateCreated", "DateDeleted", "DateModified", "InventoryCount", "IsActive", "IsDeleted" },
                 values: new object[,]
                 {
-                    { 3, "1111", 3, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(614), null, null, 10, true, false },
-                    { 4, "3333", 4, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(684), null, null, 5, true, false },
-                    { 5, "4444", 5, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(710), null, null, 9, true, false }
+                    { 3, "1111", 3, new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8560), null, null, 10, true, false },
+                    { 4, "3333", 4, new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8622), null, null, 5, true, false },
+                    { 5, "4444", 5, new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8634), null, null, 9, true, false }
                 });
 
             migrationBuilder.InsertData(
@@ -338,9 +339,9 @@ namespace BookManager.DAL.Data.Migrations
                 columns: new[] { "Id", "BarCode", "Condition", "DateCreated", "DateDeleted", "DateModified", "Description", "Genre", "ISBN", "IsActive", "IsDeleted", "Price", "Title", "Type" },
                 values: new object[,]
                 {
-                    { 3, "1111", 0, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(732), null, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(734), "After stopping off at Starbase Yorktown, a remote outpost on the fringes of Federation space, the USS Enterprise, halfway into their five-year mission, is destroyed by an unstoppable wave of unknown aliens.", 6, "329-320-2392-1", true, false, 15.99m, "Star Trek - Beyond", 1 },
-                    { 4, "3333", 0, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(740), null, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(742), "The novelization of the \"First Contact\" film which also includes a behind-the-scenes look at the making of the film. Captain Pickard, Commander Riker, Lieutenant Commander Data and the rest of the crew must face their greatest foe, the half-organic, half-mechanical Borg..", 6, "978-0-671-56743-1", true, false, 10.99m, "Star Trek - First Contact", 0 },
-                    { 5, "4444", 0, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(746), null, new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(749), "Landing on Earth, the Doctor finds a stranded alien in need of protection – and is dragged headlong into the life of his old friend Donna Noble, knowing that if she ever remembers their time together, she will die…", 6, "978-1-84607-571-7", true, false, 16.00m, "Doctor Who: The Star Beast ", 0 }
+                    { 3, "1111", 0, new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8655), null, new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8657), "After stopping off at Starbase Yorktown, a remote outpost on the fringes of Federation space, the USS Enterprise, halfway into their five-year mission, is destroyed by an unstoppable wave of unknown aliens.", 6, "329-320-2392-1", true, false, 15.99m, "Star Trek - Beyond", 1 },
+                    { 4, "3333", 0, new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8662), null, new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8664), "The novelization of the \"First Contact\" film which also includes a behind-the-scenes look at the making of the film. Captain Pickard, Commander Riker, Lieutenant Commander Data and the rest of the crew must face their greatest foe, the half-organic, half-mechanical Borg..", 6, "978-0-671-56743-1", true, false, 10.99m, "Star Trek - First Contact", 0 },
+                    { 5, "4444", 0, new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8667), null, new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8668), "Landing on Earth, the Doctor finds a stranded alien in need of protection – and is dragged headlong into the life of his old friend Donna Noble, knowing that if she ever remembers their time together, she will die…", 6, "978-1-84607-571-7", true, false, 16.00m, "Doctor Who: The Star Beast ", 0 }
                 });
 
             migrationBuilder.InsertData(

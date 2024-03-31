@@ -14,7 +14,8 @@ namespace BookManager.API
             var host = emailSettings["Host"];
             var port = emailSettings.GetValue<int>("Port");
             services.AddFluentEmail(defaultFromEmail);
-            services.AddSingleton<ISender>(x => new SmtpSender(new SmtpClient(host, port))); // I'm using dev mode using 'smtp4dev' hence i'm only using host and port
+            
+            services.AddSingleton<ISender>(x => new SmtpSender(new SmtpClient(host, port))); 
         }
     }
 }

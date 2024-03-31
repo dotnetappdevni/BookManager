@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using NLog;
 using System.Diagnostics.Eventing.Reader;
 using System.Text.Json;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -58,7 +61,7 @@ namespace BookManager.API.Controllers
         }
 
 
-        [HttpDelete("UpdateCustomer")]
+        [HttpPut("UpdateCustomer")]
         public IActionResult Update(Customer customer)
         {
             var customerToUpdate = _customerService.Update(customer);
@@ -72,7 +75,7 @@ namespace BookManager.API.Controllers
             {
                 _logger.Error("Exception has occurred in the Update Customer Controller method", customerToUpdate.Exception);
 
-                return StatusCode(400, JsonSerializer.Serialize(customerToUpdate.Errors));
+                return StatusCode(400, JsonSerializer.Serialize($"Error Message : {customerToUpdate.Errors}"));
 
             }
         }
@@ -90,9 +93,12 @@ namespace BookManager.API.Controllers
             }
             else
             {
-                _logger.Error("Exception has occurred in the Delete Customer Controller method", customerToDelete.Exception);
 
-                return StatusCode(400, JsonSerializer.Serialize(customerToDelete.Errors));
+                _logger.Error("Exception has occurred in the Delete Customer Controller method", customerToDelete.Exception);
+                
+                string json = JsonSerializer.Serialize(customerToDelete.Errors);
+
+                return BadRequest(json);
 
 
             }

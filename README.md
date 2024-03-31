@@ -147,24 +147,70 @@ eg
 
  Upload Image of popup and button here.
    
- Api Documenation is discoverable here
+ Api Documentation is discoverable here
 
   https://localhost:7066/swagger/index.html
 
-  I setup a tempory inbox for you on my hosting
+ <h2>Email Config</h2>
 
-  web mail is 
-  https://mail5018.site4now.net
-  username : edt@dotnetappdevni.com
-  password : Test12345!@
+ I used a local smtp testing tool called
+
+ Paper Cut Can be downloaded from here from there you 
+ can use the app settings as I left them
+
+ https://github.com/ChangemakerStudios/Papercut-SMTP
+
+ https://github.com/ChangemakerStudios/Papercut-SMTP/releases
+ Email Settings in json
+ 
+ ```
+  "EmailSettings": {
+    "DefaultFromEmail": "edt@dotnetappdevni.com",
+    "Host": "localhost",
+    "Port": "25"
+  },
+```
+They do not require any config values for 
+username and password
+ 
+ Put image of config settings here.
+
+ put image of show here
+
+ <h2>Users To Login Into API<h2>
+ I created one user for you to login to the api
+ pre existing
+
+ If you use the following json payload in the body
+ ```
+ {
+  "email": "admin@edt.com",
+  "password": "Test12345!@",
+  "twoFactorCode": "string",
+  "twoFactorRecoveryCode": "string"
+ }
+```
+
+Use the end point /login
+It will allow u to login to the api once u done the migration
+steps above
 
 
-  This is for the password resets and what not form the identity api.
+<h1>Registration of new user</h1>
+You can add a new user at the registration section
+end point /regiser
 
-  You can also setup a local smpt dev instance by using the following
+Password requirements are 1 upper
+1 special character.
 
-  dotnet tool install -g Rnwood.Smtp4dev
+```
+{
+  "email": "example@example.com",
+  "password": "Test12345!@"
+}
+```
 
-  you can run the tool by runing command in the package manager console
-
-  smtp4dev 
+Note: Do NOT forget that if you do register a new user u need to 
+configure a smtp server via app settings or use 
+paper cut as recommended above as you need to verify the 
+activation link.

@@ -14,59 +14,47 @@ using Microsoft.Data.Sqlite;
 using Castle.Components.DictionaryAdapter.Xml;
 namespace BookManager.Tests
 {
-    public class BookingServicesTests : IDisposable 
+    public class BookingServicesTests : IDisposable
     {
         private bool _useSqlite;
 
         private SqliteConnection _connection;
         private DbContextOptions _options;
 
-    public BookingServicesTests()
-    {
-        _connection = new SqliteConnection("datasource=:memory:");
-        _connection.Open();
-
-        _options = new DbContextOptionsBuilder()
-            .UseSqlite(_connection)
-            .Options;
-        using (var context = new ApplicationDBContext(_options))
-            context.Database.EnsureCreated();
-    }
-
-        /// <summary>
-        /// Books the check out should decrease inventory of the same book.
-        /// </summary>
-        [Test]
-        public async Task Book_Added_ShouldBeCreated()
+        public BookingServicesTests()
         {
-            using (var context = new ApplicationDBContext(_options))
-            {                
+            _connection = new SqliteConnection("datasource=:memory:");
+            _connection.Open();
 
-            }
+            _options = new DbContextOptionsBuilder()
+                .UseSqlite(_connection)
+                .Options;
+            using (var context = new ApplicationDBContext(_options))
+                context.Database.EnsureCreated();
         }
 
-
-    /// <summary>
-    /// Books the check out should decrease inventory of the same book.
-    /// </summary>
-    /// <param name="expectedCount">The expected count.</param>
-    [TestCase(9)]
-    public async Task Book_CheckOut_ShouldDecreaseByNumber(int expectedCount)
-    {
-
-        using (var context = new ApplicationDBContext(_options))
+        /// <summary>
+        /// Books the check in should increase inventory of the same book.
+        /// </summary>
+        /// <param name="expectedCount">The expected count.</param>
+        [TestCase(11)]
+        public async Task Book_CheckedIn_ShouldIncreaseInventory(int expectedCount)
         {
-            context.BookInventories.Add(new BookInventory
+            using (var context = new ApplicationDBContext(_options))
             {
+                context.BookInventories.Add(new BookInventory
+                {
 
-                BookId = 4,
-                BarCode = "1111",
-                InventoryCount = 10,
-                IsActive = true,
-                IsDeleted = false,
+                    BookId = 4,
+                    BarCode = "1111",
+                    InventoryCount = 10,
+                    IsActive = true,
+                    IsDeleted = false,
 
-            });
-            await context.SaveChangesAsync();
+                });
+                await context.SaveChangesAsync();
+
+            }
 
             using (var context2 = new ApplicationDBContext(_options))
             {
@@ -74,9 +62,10 @@ namespace BookManager.Tests
                 int bookId = 4;
                 int customerId = 10;
                 string barCode = "1111";
+                DateTime returnDate = DateTime.Now;
 
                 // ACT
-                var act = service.CheckOut(customerId, bookId, barCode, 7);
+                var act = service.CheckIn(customerId, bookId, barCode, returnDate);
 
 
                 // Assert
@@ -84,12 +73,53 @@ namespace BookManager.Tests
             }
         }
 
-    }
-
         public void Dispose()
         {
-            _connection.Close();
+            throw new NotImplementedException();
         }
+     
+
+    /// <summary>
+    /// Books the check out should decrease inventory of the same book.
+    /// </summary>
+    /// <param name="expectedCount">The expected count.</param>
+    [TestCase(9)]
+        public async Task Book_CheckOut_ShouldDecreaseByNumber(int expectedCount)
+        {
+
+            using (var context = new ApplicationDBContext(_options))
+            {
+                context.BookInventories.Add(new BookInventory
+                {
+
+                    BookId = 4,
+                    BarCode = "1111",
+                    InventoryCount = 10,
+                    IsActive = true,
+                    IsDeleted = false,
+
+                });
+                await context.SaveChangesAsync();
+
+                using (var context2 = new ApplicationDBContext(_options))
+                {
+                    var service = new BookManagerServices(context2);
+                    int bookId = 4;
+                    int customerId = 10;
+                    string barCode = "1111";
+
+                    // ACT
+                    var act = service.CheckOut(customerId, bookId, barCode, 7);
+
+
+                    // Assert
+                    Assert.AreEqual(act.Data, expectedCount);
+                }
+            }
+
+        }
+
+      
 
 
         public void UseSqlite()

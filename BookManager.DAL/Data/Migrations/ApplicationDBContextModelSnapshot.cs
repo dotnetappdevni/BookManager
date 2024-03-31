@@ -83,8 +83,8 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 3,
                             BarCode = "1111",
                             Condition = 0,
-                            DateCreated = new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(732),
-                            DateModified = new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(734),
+                            DateCreated = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8655),
+                            DateModified = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8657),
                             Description = "After stopping off at Starbase Yorktown, a remote outpost on the fringes of Federation space, the USS Enterprise, halfway into their five-year mission, is destroyed by an unstoppable wave of unknown aliens.",
                             Genre = 6,
                             ISBN = "329-320-2392-1",
@@ -99,8 +99,8 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 4,
                             BarCode = "3333",
                             Condition = 0,
-                            DateCreated = new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(740),
-                            DateModified = new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(742),
+                            DateCreated = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8662),
+                            DateModified = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8664),
                             Description = "The novelization of the \"First Contact\" film which also includes a behind-the-scenes look at the making of the film. Captain Pickard, Commander Riker, Lieutenant Commander Data and the rest of the crew must face their greatest foe, the half-organic, half-mechanical Borg..",
                             Genre = 6,
                             ISBN = "978-0-671-56743-1",
@@ -115,8 +115,8 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 5,
                             BarCode = "4444",
                             Condition = 0,
-                            DateCreated = new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(746),
-                            DateModified = new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(749),
+                            DateCreated = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8667),
+                            DateModified = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8668),
                             Description = "Landing on Earth, the Doctor finds a stranded alien in need of protection – and is dragged headlong into the life of his old friend Donna Noble, knowing that if she ever remembers their time together, she will die…",
                             Genre = 6,
                             ISBN = "978-1-84607-571-7",
@@ -170,7 +170,7 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 3,
                             BarCode = "1111",
                             BookId = 3,
-                            DateCreated = new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(614),
+                            DateCreated = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8560),
                             InventoryCount = 10,
                             IsActive = true,
                             IsDeleted = false
@@ -180,7 +180,7 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 4,
                             BarCode = "3333",
                             BookId = 4,
-                            DateCreated = new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(684),
+                            DateCreated = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8622),
                             InventoryCount = 5,
                             IsActive = true,
                             IsDeleted = false
@@ -190,7 +190,7 @@ namespace BookManager.DAL.Data.Migrations
                             Id = 5,
                             BarCode = "4444",
                             BookId = 5,
-                            DateCreated = new DateTime(2024, 3, 30, 15, 3, 47, 402, DateTimeKind.Local).AddTicks(710),
+                            DateCreated = new DateTime(2024, 3, 31, 6, 4, 8, 567, DateTimeKind.Local).AddTicks(8634),
                             InventoryCount = 9,
                             IsActive = true,
                             IsDeleted = false
@@ -236,6 +236,9 @@ namespace BookManager.DAL.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsReturned")
                         .HasColumnType("bit");
 
                     b.Property<int?>("Status")
@@ -564,31 +567,31 @@ namespace BookManager.DAL.Data.Migrations
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "252940e1-ba66-461c-b059-426773c5b71a",
-                            Email = "edt@dotnetappdevni.com",
-                            EmailConfirmed = false,
+                            ConcurrencyStamp = "29e495fe-dd66-40ca-ba1d-70691b4a2b7c",
+                            Email = "admin@edt.com",
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
-                            NormalizedEmail = "EDT@DOTNETAPPDEVNI.COM",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEN0VCsTymU4NL4t9x0BpND2MB6mBKaoPx39VB9dSYuugwQWg1cHzQBvEAhox8KLQkQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "b9fbfe1f-5dbf-47c3-a4e4-686bc97d1308",
+                            NormalizedEmail = "ADMIN@EDT.COM",
+                            NormalizedUserName = "admin@edt.com",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAw8vCfoZhluTKnauZbg+Yo89uWEUBDVZHev/KF1vSidMcKleC31SfpslOtr1+wyQA==",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "6c668063-ec3f-44b5-b123-272d261acaef",
                             TwoFactorEnabled = false,
-                            UserName = "edt@dotnetappdevni.com"
+                            UserName = "admin@edt.com"
                         },
                         new
                         {
                             Id = "d18e858a-c38d-4083-99b6-c5697b81d7cd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c2312b70-9862-4a9a-a84e-335e27851b9d",
+                            ConcurrencyStamp = "53aa43ab-4e9d-4607-be95-8d6eee1c7a13",
                             Email = "Staff@EDT.COM",
-                            EmailConfirmed = false,
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "STAFF@EDT.COM",
                             NormalizedUserName = "STAFF",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJFHHgQm1UjfjefqwFkQwAHaxg/Yk0SSodye9Vc8mU1tclRCjEuvIID/r19sxWCUrQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "1a749700-1480-4ae7-89b2-77db5f2b0627",
+                            PasswordHash = "AQAAAAIAAYagAAAAECKEG44FthtYyn9zO7ZmEbXuok3Po9XUarl4mIqOzApiTg9NIUWd75BXXOD8bT6Q4Q==",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "dfdfa715-7cae-4f48-996e-6ee74e71d6c8",
                             TwoFactorEnabled = false,
                             UserName = "Staff"
                         });

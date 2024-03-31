@@ -7,6 +7,9 @@ using BookManager.Services.Interfaces;
 using System.Text.Json;
 using NLog;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 namespace BookManager.API.Controllers
 {
     [Route("api/[controller]")]
@@ -60,7 +63,9 @@ namespace BookManager.API.Controllers
             }
             else
             {
-                return StatusCode(400, JsonSerializer.Serialize(checkInProcess.Errors));
+                string json = JsonConvert.SerializeObject(checkInProcess.Errors, Formatting.Indented);
+
+                return StatusCode(400, json);
             }
         }
 
@@ -75,20 +80,20 @@ namespace BookManager.API.Controllers
             }
             else
             {
-                return StatusCode(StatusCodes.Status400BadRequest, bookToAdd.Errors);
+                return StatusCode(StatusCodes.Status400BadRequest, JsonSerializer.Serialize(bookToAdd.Errors));
             }            
         }
 
-        [HttpDelete("UpdateBook")]
+        [HttpPut("UpdateBook")]
         public IActionResult UpdateBook(Book book)
         {
             var bookToUpdate = _ibookManagerServices.UpdateBook(book);
             if (bookToUpdate.Succeeded)
             {
-                return Ok();
+                return Ok(bookToUpdate.Data);
             }else
             {
-                return StatusCode(StatusCodes.Status400BadRequest, bookToUpdate.Errors);
+                return StatusCode(StatusCodes.Status400BadRequest, JsonSerializer.Serialize(bookToUpdate.Errors));
             }
         }
 
@@ -102,7 +107,9 @@ namespace BookManager.API.Controllers
             }
             else
             {
-                return StatusCode(StatusCodes.Status400BadRequest, bookTodelete.Errors);
+                string json = JsonConvert.SerializeObject(bookTodelete.Errors, Formatting.Indented);
+
+                return BadRequest(json);
             }
 
         }
