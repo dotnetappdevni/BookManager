@@ -243,5 +243,10 @@ If you click on nunit jobs you can see a nice brake down of tests.
 
 https://github.com/dotnetappdevni/BookManager/actions/runs/8499936802/job/23281270260
 
-Insert image of brake down here
+![workflowsunitests](https://github.com/dotnetappdevni/BookManager/assets/5619229/7ceeb2f9-e468-4021-a656-eca8ac139a7e)
+
+
+
+ ![workflowunitests2](https://github.com/dotnetappdevni/BookManager/assets/5619229/ae7edc29-cd5b-4961-89ed-972ba95ea762)
+
 
