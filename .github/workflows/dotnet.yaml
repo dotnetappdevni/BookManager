@@ -26,14 +26,12 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - name: BookManager.Tests
-      run: dotnet test $SOLUTION --configuration $BUILD_CONFIG --logger "trx;LogFileName=test-results.trx" || true
- 
+    - name: Build & Test
+      run: dotnet test --logger "trx;LogFileName=test-results.trx" --results-directory "TestResults"      
     - name: Test Report
       uses: dorny/test-reporter@v1
-      if: always()
+      if: success() || failure()    # run this step even if previous step failed
       with:
-        name: DotNET Tests
-        path: "**/test-results.trx"                            
-        reporter: dotnet-trx
-        fail-on-error: true
+          name: NUnit Tests            # Name of the check run which will be created
+          path: TestResults/test-results.trx    # Path to test results
+          reporter: dotnet-trx        # Format of test results
