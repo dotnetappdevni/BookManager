@@ -3,34 +3,29 @@
 
 <h2>EDT Book Manager API</h2>
 
-The Book manager api facliates the adding of books / customers and the 
-check out and check in process of books.
+The Book Manager API facilitates the adding of books/customers and the check-out and check-in process of books.
 
-You will have to remove the Data Migrations from the 
-BookManager.DAL Solution if you are wanting to use ef migrations 
-to seed the database
+You will have to remove the Data Migrations from the BookManager.DAL solution if you want to use EF migrations to seed the database.
 
-To be able to create the migration ensure you are in the 
-root of the directory.
+To be able to create the migration, ensure you are in the root directory of the project.
 
 ************************************************************************
 <h2> DB Server Setup Instructions</h2>
 
-Download and Instal SQL Server 2019 Developer edition or express.
+Download and install SQL Server 2019 Developer Edition or Express.
 
- I am using version 2019 of sql server Version 15.0.2104.1
+I am using version 2019 of SQL Server, Version 15.0.2104.1.
 
- Microsoft Donwload Link 2019 Server please virus scan download at own risk.
+Microsoft Download Link for SQL Server 2019: Please virus-scan the download at your own risk.
 
     https://go.microsoft.com/fwlink/?linkid=866662
 ***********************************************************************
-In Solution Explorer Navigate to BookManager.API Project and find the 
-appsettings files in the root of the project.
+In Solution Explorer, navigate to the BookManager.API project and locate the appsettings files in the root of the project.
 
-<h2>appsettings.Development.json configuration setup</h2>
-If you are building release obviouslly make sure the connection settings match that of your development jason 
-including email settings.
- Find the database connection string which I use SQL Server
+<h2>appsettings.Development.json Configuration Setup</h2>
+If you are building a release, obviously ensure that the connection settings match those
+of your development JSON, including email settings.
+Find the database connection string, which I use for SQL Server.
 
  NB You can also replace the one in appsettings.json 
 
@@ -47,28 +42,23 @@ including email settings.
 ![connecctionstrings](https://github.com/dotnetappdevni/BookManager/assets/5619229/f06a54cd-6f9b-44aa-9fbb-991148b32f53)
 
 <H2>
-You Need to replace sql5053.site4now.net with your server instance name.
-Keep the catalog the same with Initial Catalog and create a login in sql managment studio
-for the </H2>
+You need to replace sql5053.site4now.net with your server instance name.
+Keep the catalog the same with Initial Catalog and create a login in SQL Management Studio for the </H2>
 
 <h2>username:edt</h2>
 <h2>password:edt12345</h2>
 
-<H2>
-Note Important make sure to map the login above to the database name 
-</H2>
-<h1>Database name : You can change this to anything you want</h1>
+<h2>Note: It's important to ensure that the login above is mapped to the database name.</h2>
+<h1>Database Name: You can change this to anything you want.</h1>
 
-And give edt user dbowner permissions.
+And give the EDT user DBOwner permissions.
 
-**Migrations and Database scaffolding insrtuctions**
-You can apply the migration from the PackageManager Console
-Ensure that the Api Project is set as startup project and 
-showing in the dropdown.
+Migrations and Database Scaffolding Instructions:
+You can apply the migration from the PackageManager Console. 
+Ensure that the API Project is set as the startup project and is showing in the dropdown.
 
-For Completness I have created an offline back up 
-of the database its in the folder DBScripts of the 
-outer folder.
+For completeness, I have created an offline backup of the database. 
+It's in the folder named DBScripts in the outer folder.
 
 ```
 dotnet ef migrations add FirstMigration --context
@@ -76,13 +66,13 @@ ApplicationDBContext --output-dir Data\Migrations
 -p BookManager.DAL -s BookManager.API 
 ```
 
-For Example :
- Your directory should look like this if you do the pwd command 
- in the package manager console.
+For example,
+your directory should look like this 
+if you use the 'pwd' command in the package manager console.
 
 ![image](https://github.com/dotnetappdevni/BookManager/assets/5619229/62beead7-d57c-427b-9d37-e58811073fad)
 
-**Please ensure that the api project is selected as the default project as shown by the second arrow and make sure that it is set as the **
+**Please ensure that the API project is selected as the default project, as indicated by the second arrow, and make sure that it is set as the **
 
 ** startup project **
 eg
@@ -90,9 +80,9 @@ eg
 ![image](https://github.com/dotnetappdevni/BookManager/assets/5619229/c46ad2f3-d73b-4a2d-85f9-5b985572b655)
 
 
- Once you have create the Logins above and created the migration
- you can apply the migration again please ensure you are in the directory
- as above image.
+Once you have created the Logins above and executed the migration,
+please ensure that you are in the directory as shown 
+in the image above before applying the migration again.
  
  ```
   dotnet ef database update --context ApplicationDBContext
@@ -101,16 +91,14 @@ eg
 eg
 
 ![image](https://github.com/dotnetappdevni/BookManager/assets/5619229/5696705a-7482-49e9-92c9-fe95bc2c3eaf)
+Once the migration is complete, you can log in to SQL Server using the details created above.
 
- One the migration is complete you can log in to sql server using the details 
- created above.
+<h2>Features of API</h2>
+* .NET 8
+* New .NET 8 API endpoints allowing login and JWT token generation
 
- <h2>Features of Api<h2>
-
- * Dotnet 8 
- * New dotnet 8 API End Points allows login and jwt token generation
-
- <h2>Api End Points</h2>
+<h2>API Endpoints</h2>
+<h2>Books Endpoints</h2>
 
  <h2> Books End Points</h2>
  
@@ -139,12 +127,13 @@ eg
   "twoFactorRecoveryCode": "string"
 }
 ```
-   One You have logged in the swagger will produce a jwt berrer token.
+ Once you have logged into Swagger, it will produce a JWT bearer token.
 
-   Once you have got the token click the authorise  button on the main swagger screen
-   to allow you to enter the token
+Once you have obtained the token, click the "Authorize" button on the 
 
-   its very important that when you do you read the instructions in the popup.
+main Swagger screen to allow you to enter the token.
+
+It's very important that when you do, you read the instructions in the popup.
 
    **IE THIS TEXT**
 
@@ -174,13 +163,13 @@ eg
   },
   ```
 
-  This is my own mail server on my own .net hosting so it should 
-  work unless you need your security team to allow it.
+ This is my own mail server on my own .net hosting, 
+ so it should work unless you need your security team to allow it.
 
-  The host company is called smarterasp.net
+The hosting company is called smarterasp.net.
 
-  This will send a activation link email to your email.
-  If your company firewall is strong please amend these
+This will send an activation link email to your email.
+If your company firewall is strong, please make amendments accordingly.
 
   **In appsettings.Development or appsettings.json if deploying
   to server.**
@@ -197,17 +186,14 @@ eg
  }
 ```
 
-Use the end point /login
-It will allow u to login to the api once u done the migration
-steps above
+Use the endpoint /login. It will allow you to login to 
+the API once you have completed the migration steps above.
 
+<h1>Registration of a new user</h1>
+You can add a new user at the registration section endpoint `/register`.
 
-<h1>Registration of new user</h1>
-You can add a new user at the registration section
-end point /regiser
+Password requirements are: 1 uppercase letter and 1 special character.```
 
-Password requirements are 1 upper
-1 special character.
 
 **please ensure its a live email address as the code 
 uses this to send activation link to you.**
@@ -218,18 +204,13 @@ uses this to send activation link to you.**
   "password": "Test12345!@"
 }
 ```
+Note: Do NOT forget that if you do register a new user,
+you need to configure an SMTP server via app settings or use my live one.
 
-Note: Do NOT forget that if you do register a new user u need to 
-configure a smtp server via app settings or use 
-paper cut as recommended above as you need to verify the 
-activation link.
-
-While not part of the assignment I hosted it online here on 
-my own hosting.
+While not part of the assignment, I hosted it online here on my own hosting.
 
 <h2>Demo Live URL</h2>
-
-Just to prove am capable of deploying to a server enviorment.
+Just to prove I am capable of deploying to a server environment.
 
 [https://api-edt.dotnetappdevni.com/swagger/index.html](https://api-edt.dotnetappdevni.com/swagger/index.html)
 
