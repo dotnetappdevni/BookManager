@@ -154,33 +154,24 @@ eg
 
  <h2>Email Config</h2>
 
- I used a local smtp testing tool called
+ I have setup an email box on my own domain for the smtp relay 
 
- Paper Cut Can be downloaded from here from there you 
- can use the app settings as I left them
-
- https://github.com/ChangemakerStudios/Papercut-SMTP
-
- https://github.com/ChangemakerStudios/Papercut-SMTP/releases
- Email Settings in json
- 
  ```
-  "EmailSettings": {
-    "DefaultFromEmail": "edt@dotnetappdevni.com",
-    "Host": "localhost",
-    "Port": "25"
+   "EmailSettings": {
+    "DefaultFromEmail": "info@dotnetappdevni.com",
+    "Host": "mail5018.site4now.net",
+    "Port": "25",
+    "Username": "edt@dotnetappdevni.com",
+    "Password": "Test12345!@"
   },
-```
-They do not require any config values for 
-username and password
- 
- Put image of config settings here.
+  ```
+  This will send a activation link email to your email.
+  If your company firewall is strong please amend these
 
- put image of show here
+  **In appsettings.Development or appsettings.json if deploying
+  to server.**
 
- <h2>Users To Login Into API<h2>
- I created one user for you to login to the api
- pre existing
+  Screen shot of welcome email.
 
  If you use the following json payload in the body
  ```
@@ -203,6 +194,9 @@ end point /regiser
 
 Password requirements are 1 upper
 1 special character.
+
+**please ensure its a live email address as the code 
+uses this to send activation link to you.**
 
 ```
 {

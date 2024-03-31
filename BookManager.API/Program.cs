@@ -78,7 +78,6 @@ namespace BookManager
                 loggingBuilder.AddNLog();
             });
 
-            builder.Services.AddFluentEmail(builder.Configuration);
             builder.Services.AddTransient<IEmailService, EmailService>();
             builder.Services.AddTransient<IEmailSender, EmailSender>();
 

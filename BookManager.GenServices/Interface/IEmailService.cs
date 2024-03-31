@@ -1,4 +1,5 @@
 ﻿using BookManager.Models;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,6 @@ namespace BookManager.GenServices.Interface
         /// Send an email.
         /// </summary>
         /// <param name="emailMessage">Message object to be sent</param>
-        Task Send(EmailMessageModel emailMessage);
+        Task Send(EmailMessageModel emailMessageModel);
     }
 }
