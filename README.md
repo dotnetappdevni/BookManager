@@ -232,3 +232,16 @@ my own hosting.
 Just to prove am capable of deploying to a server enviorment.
 
 [https://api-edt.dotnetappdevni.com/swagger/index.html](https://api-edt.dotnetappdevni.com/swagger/index.html)
+
+<h2>Automated Builds</h2>
+
+If you look at github actions tab you will the last build if you 
+click on that it will take you to runs status page.
+
+On left hand side you can see two build steps
+If you click on nunit jobs you can see a nice brake down of tests.
+
+https://github.com/dotnetappdevni/BookManager/actions/runs/8499936802/job/23281270260
+
+Insert image of brake down here
+
