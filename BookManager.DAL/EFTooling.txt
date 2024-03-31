@@ -1,5 +1,9 @@
 ﻿Be in the mian directory ie D:\GitForJobs\bookmanagerapi\bookmanagerapi.API
 
+
+If you need to seed the database fresh first delete the data 
+folder in BookManager.DAL that contains the migratrations ran previous
+
  dotnet ef migrations add firstmigration --context ApplicationDBContext --output-dir Data\Migrations -p BookManager.DAL -s BookManager.API 
 
  dotnet ef database update --context ApplicationDBContext -p BookManager.DAL -s BookManager.API
