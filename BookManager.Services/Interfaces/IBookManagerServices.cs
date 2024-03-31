@@ -19,8 +19,11 @@ namespace BookManager.Services.Interfaces
         BookManagerErrorObject CheckOut(int customerId, int bookId, string barCode, int returnDateInterval);
 
         BookManagerErrorObject Delete(Book book);
-      
-        BookManagerErrorObject Return(int customerId, string barCode, DateTime dateReturned);
+
+        public BookManagerErrorObject UpdateBook(Book book);
+
+        BookManagerErrorObject CheckIn(int customerId, int bookId, string barCode, DateTime returnedDate);
+
 
     }
 }

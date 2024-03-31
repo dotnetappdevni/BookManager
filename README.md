@@ -29,7 +29,8 @@ In Solution Explorer Navigate to BookManager.API Project and find the
 appsettings files in the root of the project.
 
 <h2>appsettings.Development.json configuration setup</h2>
-
+If you are building release obviouslly make sure the connection settings match that of your development jason 
+including email settings.
  Find the database connection string which I use SQL Server
 
  NB You can also replace the one in appsettings.json 
@@ -44,16 +45,19 @@ appsettings files in the root of the project.
 
 ```
 
-You Need to replace DAVIDLEGION\\SQLDEVELOPER2019db with your server instance name.
-Keep the catalog the same edtbookmanager and create a login in sql managment studio
+![connecctionstrings](https://github.com/dotnetappdevni/BookManager/assets/5619229/f06a54cd-6f9b-44aa-9fbb-991148b32f53)
+
+
+You Need to replace sql5053.site4now.net with your server instance name.
+Keep the catalog the same with Initial Catalog and create a login in sql managment studio
 for the 
 
-<h2>username:edt
-password:edt12345</h2>
+<h2>username:edt</h2>
+<h2>password:edt12345</h2>
 
-Important make sure to map the login abovve to the
+Important make sure to map the login above to the database name 
 
-<h1>**Database name : edtbookmanager**</h1>
+<h1>Database name : You can change this to anything you want</h1>
 
 And give edt user dbowner permissions.
 
@@ -72,8 +76,15 @@ For Example :
  Your directory should look like this if you do the pwd command 
  in the package manager console.
 
- 
- Put Image Here
+![image](https://github.com/dotnetappdevni/BookManager/assets/5619229/62beead7-d57c-427b-9d37-e58811073fad)
+
+**Please ensure that the api project is selected as the default project as shown by the second arrow and make sure that it is set as the **
+
+** startup project **
+eg
+
+![image](https://github.com/dotnetappdevni/BookManager/assets/5619229/c46ad2f3-d73b-4a2d-85f9-5b985572b655)
+
 
  Once you have create the Logins above and created the migration
  you can apply the migration again please ensure you are in the directory
@@ -83,6 +94,9 @@ For Example :
   dotnet ef database update --context ApplicationDBContext
   -p BookManager.DAL -s BookManager.API
  ```
+eg
+
+![image](https://github.com/dotnetappdevni/BookManager/assets/5619229/5696705a-7482-49e9-92c9-fe95bc2c3eaf)
 
  One the migration is complete you can log in to sql server using the details 
  created above.

@@ -12,10 +12,10 @@ namespace BookManager.CustomerService
         private static readonly NLog.Logger _logger = LogManager.GetCurrentClassLogger();
 
 
-        public CustomerServices(ApplicationDBContext dBContext) 
+        public CustomerServices(ApplicationDBContext dBContext)
         {
             _dbContext = dBContext;
-           
+
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace BookManager.CustomerService
         /// <returns>Returns a single customer</returns>
         public Customer GetCustomerById(int id)
         {
-            return _dbContext.Customers.Where(w => w.Id == id & w.IsDeleted == false && w.IsActive == true).FirstOrDefault(); 
+            return _dbContext.Customers.Where(w => w.Id == id & w.IsDeleted == false && w.IsActive == true).FirstOrDefault();
         }
 
         /// <summary>
@@ -45,23 +45,71 @@ namespace BookManager.CustomerService
         public BookManagerErrorObject Add(Customer customer)
         {
             BookManagerErrorObject bookManagerErrorObject = new BookManagerErrorObject();
-            _dbContext.Customers.Add(customer);
-            try 
-            {               
+            _logger.Error("Entered the Update customer method  ");
+            try
+            {
+                _dbContext.Customers.Add(customer);
                 _dbContext.SaveChanges();
                 bookManagerErrorObject.Succeeded = true;
-                bookManagerErrorObject.Messages.Add("Customer Created Sucessfully");
-                _logger.Info("Customer created sucessfully");
+                bookManagerErrorObject.Messages.Add("Customer Created Successfully");
+                _logger.Info("Customer created successfully");
+                _logger.Error("Exited the Update customer method");
             }
             catch (Exception ex)
             {
                 bookManagerErrorObject.Succeeded = false;
                 bookManagerErrorObject.Exception = ex;
-                _logger.Error("Exception occoured in the add customer method servce" , ex);
+                _logger.Error("Exception occurred in the add customer method service", ex);
             }
             _dbContext.SaveChanges();
             return bookManagerErrorObject;
         }
+
+        public BookManagerErrorObject Update(Customer customer)
+        {
+            BookManagerErrorObject bookManagerErrorObject = new BookManagerErrorObject();
+            _logger.Error("Entered the Update customer method  ");
+
+            try
+            {
+                var customerToUpdate = _dbContext.Customers.Where(w => w.Id == customer.Id).FirstOrDefault();
+                if (customerToUpdate != null)
+                {
+                    _dbContext.Entry(customerToUpdate).CurrentValues.SetValues(customer);
+                    try
+                    {
+                        _dbContext.SaveChanges();
+                        bookManagerErrorObject.Succeeded = true;
+                        bookManagerErrorObject.Messages.Add($"Customer Successfully updated {customer.Id}");
+                       _logger.Error("Update customer method completed successfully");
+                        _logger.Error("Exited the Update customer method  ");
+
+                    }
+                    catch (Exception ex)
+                    {
+                        bookManagerErrorObject.Succeeded = false;
+                        bookManagerErrorObject.Errors.Add($"Exception occoured while updating customer {customer.Id}");
+                        bookManagerErrorObject.Exception = ex;
+                        _logger.Error("Exception occurred in the Update customer method service", ex);
+
+
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                bookManagerErrorObject.Succeeded = false;
+                bookManagerErrorObject.Errors.Add($"Exception occurred while updating customer {customer.Id}");
+                bookManagerErrorObject.Exception = ex;
+                _logger.Error("Exception occurred in the Update customer method service", ex);
+
+
+            }
+            return bookManagerErrorObject;
+        }
+
+
 
         /// <summary>
         /// Deletes a customer
@@ -70,15 +118,17 @@ namespace BookManager.CustomerService
         /// <returns>BookManagerErrorObject cuustom error object</returns>
         public BookManagerErrorObject Delete(int customerId)
         {
-           BookManagerErrorObject bookManagerErrorObject = new BookManagerErrorObject();
-            var customerToDelete= _dbContext.Customers.Find(customerId);
+            BookManagerErrorObject bookManagerErrorObject = new BookManagerErrorObject();
+            var customerToDelete = _dbContext.Customers.Find(customerId);
+            _logger.Error("Entered the Delete customer method  ");
             try
             {
                 _dbContext.Customers.Remove(customerToDelete);
                 _dbContext.SaveChanges();
                 bookManagerErrorObject.Succeeded = true;
                 bookManagerErrorObject.Messages.Add("Customer Deleted");
-                _logger.Info("Customer Deleted sucessfully");
+                _logger.Info("Customer Deleted successfully");
+                _logger.Error("Exited the Delete customer method  ");
 
             }
             catch (Exception ex)
@@ -86,14 +136,10 @@ namespace BookManager.CustomerService
                 bookManagerErrorObject.Succeeded = false;
                 bookManagerErrorObject.Errors.Add(ex.Message);
                 bookManagerErrorObject.Exception = ex;
-                _logger.Error("Exception occoured in the delete customer method servce", ex);
+                _logger.Error("Exception occurred in the Delete customer method service", ex);
 
             }
-            _dbContext.SaveChanges();
             return bookManagerErrorObject;
         }
-
-      
-
     }
 }

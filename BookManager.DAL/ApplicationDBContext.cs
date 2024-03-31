@@ -99,6 +99,7 @@ namespace BookManager.DAL
                     Email = "edt@dotnetappdevni.com",
                     NormalizedEmail = "EDT@DOTNETAPPDEVNI.COM",
                     NormalizedUserName = "ADMIN",
+                    EmailConfirmed = true,
                     LockoutEnabled = false,
                     PasswordHash = hasher.HashPassword(null, "Test12345!@")
                 }
@@ -123,6 +124,8 @@ namespace BookManager.DAL
                  Email = "Staff@EDT.COM",
                  NormalizedEmail = "STAFF@EDT.COM",
                  NormalizedUserName = "STAFF",
+                 EmailConfirmed = true,
+                 LockoutEnabled = false,
                  PasswordHash = hasher.HashPassword(null, "Test12345!@")
              }
          );
@@ -134,9 +137,8 @@ namespace BookManager.DAL
                     UserId = "d18e858a-c38d-4083-99b6-c5697b81d7cd"
                 }
             );
-
-
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.EnableSensitiveDataLogging();

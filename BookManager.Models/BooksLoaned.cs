@@ -15,6 +15,7 @@ namespace BookManager.Models
          
         public int BookId { get; set; }
 
+        public bool? IsReturned { get; set; }
         public DateTime? DateBorrowed { get; set; }
         public DateTime? DueDate { get; set; }
         public DateTime? DateReturned { get; set; }

@@ -49,7 +49,21 @@ namespace BookManager.API.Controllers
             }
         }
 
-        
+        [HttpPost("CheckIn")]
+        public IActionResult CheckIn(int customerId, int bookId, string barCode, DateTime returnDate)
+        {
+
+            var checkInProcess = _ibookManagerServices.CheckIn(customerId, bookId, barCode, returnDate);
+            if (checkInProcess.Succeeded)
+            {
+                return Ok(JsonSerializer.Serialize(checkInProcess.Messages));
+            }
+            else
+            {
+                return StatusCode(400, JsonSerializer.Serialize(checkInProcess.Errors));
+            }
+        }
+
         [HttpPost("AddBook")]
         public IActionResult AddBook(Book book)
         {
@@ -64,8 +78,21 @@ namespace BookManager.API.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest, bookToAdd.Errors);
             }            
         }
-        
-        [HttpDelete("DeleteBook")]
+
+        [HttpDelete("UpdateBook")]
+        public IActionResult UpdateBook(Book book)
+        {
+            var bookToUpdate = _ibookManagerServices.UpdateBook(book);
+            if (bookToUpdate.Succeeded)
+            {
+                return Ok();
+            }else
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, bookToUpdate.Errors);
+            }
+        }
+
+       [HttpDelete("DeleteBook")]
         public IActionResult Delete(Book book)
         {
             var bookTodelete = _ibookManagerServices.Delete(book);
