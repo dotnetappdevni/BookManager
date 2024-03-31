@@ -47,16 +47,17 @@ including email settings.
 
 ![connecctionstrings](https://github.com/dotnetappdevni/BookManager/assets/5619229/f06a54cd-6f9b-44aa-9fbb-991148b32f53)
 
-
+<H2>
 You Need to replace sql5053.site4now.net with your server instance name.
 Keep the catalog the same with Initial Catalog and create a login in sql managment studio
-for the 
+for the </H2>
 
 <h2>username:edt</h2>
 <h2>password:edt12345</h2>
 
-Important make sure to map the login above to the database name 
-
+<H2>
+Note Important make sure to map the login above to the database name 
+</H2>
 <h1>Database name : You can change this to anything you want</h1>
 
 And give edt user dbowner permissions.
@@ -65,6 +66,10 @@ And give edt user dbowner permissions.
 You can apply the migration from the PackageManager Console
 Ensure that the Api Project is set as startup project and 
 showing in the dropdown.
+
+For Completness I have created an offline back up 
+of the database its in the folder DBScripts of the 
+outer folder.
 
 ```
 dotnet ef migrations add FirstMigration --context
@@ -115,7 +120,11 @@ eg
    
    <h2> Customer End Points</h2>
    
-   * Customer End points for adding , removing,updating and deletion of customers.
+   * Customer End points for <br>
+   adding , <br>
+   removing,<br>
+   updating 
+   <br>deletion of customers.
    
    <h2>Authenication End Points</h2>
    *Login end point for generation of jwt token I created an user for the 
@@ -165,6 +174,12 @@ eg
     "Password": "Test12345!@"
   },
   ```
+
+  This is my own mail server on my own .net hosting so it should 
+  work unless you need your security team to allow it.
+
+  The host company is called smarterasp.net
+
   This will send a activation link email to your email.
   If your company firewall is strong please amend these
 
@@ -212,6 +227,8 @@ activation link.
 
 While not part of the assignment I hosted it online here on 
 my own hosting.
+
+<h2>Demo Live URL</h2>
 
 Just to prove am capable of deploying to a server enviorment.
 
