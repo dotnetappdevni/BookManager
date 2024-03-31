@@ -13,6 +13,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 namespace BookManager.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class BookController : ControllerBase
     {
@@ -98,9 +99,9 @@ namespace BookManager.API.Controllers
         }
 
        [HttpDelete("DeleteBook")]
-        public IActionResult Delete(Book book)
+        public IActionResult Delete(int id)
         {
-            var bookTodelete = _ibookManagerServices.Delete(book);
+            var bookTodelete = _ibookManagerServices.Delete(id);
             if (bookTodelete.Succeeded)
             {
                 return Ok();

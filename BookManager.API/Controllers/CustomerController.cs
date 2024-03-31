@@ -15,6 +15,7 @@ namespace BookManager.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CustomerController : ControllerBase
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();

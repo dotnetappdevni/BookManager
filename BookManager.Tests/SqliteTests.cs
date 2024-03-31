@@ -75,15 +75,14 @@ namespace BookManager.Tests
 
         public void Dispose()
         {
-            throw new NotImplementedException();
-        }
+         }
      
 
-    /// <summary>
-    /// Books the check out should decrease inventory of the same book.
-    /// </summary>
-    /// <param name="expectedCount">The expected count.</param>
-    [TestCase(9)]
+        /// <summary>
+        /// Books the check out should decrease inventory of the same book.
+        /// </summary>
+        /// <param name="expectedCount">The expected count.</param>
+        [TestCase(9)]
         public async Task Book_CheckOut_ShouldDecreaseByNumber(int expectedCount)
         {
 
@@ -92,7 +91,7 @@ namespace BookManager.Tests
                 context.BookInventories.Add(new BookInventory
                 {
 
-                    BookId = 4,
+                    BookId = 3,
                     BarCode = "1111",
                     InventoryCount = 10,
                     IsActive = true,
@@ -104,7 +103,7 @@ namespace BookManager.Tests
                 using (var context2 = new ApplicationDBContext(_options))
                 {
                     var service = new BookManagerServices(context2);
-                    int bookId = 4;
+                    int bookId = 3;
                     int customerId = 10;
                     string barCode = "1111";
 

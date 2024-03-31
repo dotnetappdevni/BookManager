@@ -6,6 +6,7 @@ using Microsoft.Identity.Client;
 using Microsoft.VisualBasic;
 using NLog;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace BookManager.Services
@@ -109,11 +110,11 @@ namespace BookManager.Services
         /// </summary>
         /// <param name="book"></param>
         /// <returns></returns>
-        public BookManagerErrorObject Delete(Book book)
+        public BookManagerErrorObject Delete(int id)
         {
             BookManagerErrorObject bookManagerErrorObject = new BookManagerErrorObject();
 
-            var bookToDelete = _dbContext.Books.FirstOrDefault(w => w.Id == book.Id);
+            var bookToDelete = _dbContext.Books.FirstOrDefault(w => w.Id == id);
             if (bookToDelete != null)
             {
                 _dbContext.Books.Remove(bookToDelete);
@@ -124,7 +125,6 @@ namespace BookManager.Services
                     List<string> messages = new List<string>();
                     messages.Add("Book Deleted successfully");
                     bookManagerErrorObject = new BookManagerErrorObject { Succeeded = true, Messages = messages, Errors = null, Exception = null };
-                    _logger.Info($"Book Deleted successfully {book.Title}");
 
 
                 }
@@ -133,7 +133,7 @@ namespace BookManager.Services
                     List<string> errors = new List<string>();
                     errors.Add(ex.Message);
                     bookManagerErrorObject = new BookManagerErrorObject { Succeeded = false, ExceptionErrors = errors, Exception = ex };
-                    _logger.Info($"Book Deleted Failed {book.Title} Book Id={book.Id}");
+                    _logger.Info($"Book Deleted Failed Book Id={id}");
 
                 }
 
@@ -186,6 +186,7 @@ namespace BookManager.Services
                         try
                         {
                             _dbContext.SaveChanges();
+                            bookManagerErrorObject.Data = bookInventory.InventoryCount;
                             bookManagerErrorObject.Messages.Add($"Successfully increased inventory and checked in book {bookId} for customer {customerId}");
                         }
                         catch (Exception ex)
@@ -213,10 +214,12 @@ namespace BookManager.Services
             else
             {
                 bookInventory.InventoryCount++;
+                
                 bookInventory.DateModified = DateTime.Now;
                 try
                 {
                     _dbContext.SaveChanges();
+                    bookManagerErrorObject.Data = bookInventory.InventoryCount; 
                 }
                 catch (Exception ex)
                 {
@@ -263,7 +266,19 @@ namespace BookManager.Services
                         // Update inventory count.
 
                         bookInventory.InventoryCount = bookInventory.InventoryCount - 1;
-                        _dbContext.SaveChanges();
+                        try
+                        {
+                            _dbContext.SaveChanges();
+                            bookManagerErrorObject.Data = bookInventory.InventoryCount;
+                            Debug.Print($"Unit test inventory count{bookManagerErrorObject.Data}");
+
+                            bookManagerErrorObject.Succeeded = true;
+                            bookManagerErrorObject.CustomMessage = "Inventory successfully decremented";
+                        }
+                        catch(Exception ex)
+                        {
+                            _logger.Error("Exception occoured in check out function decrement invetory count");
+                        }
                         var customer = _dbContext.Customers.FirstOrDefault();
                         // Add book loan entry.
                         var newLoan = new BooksLoaned
