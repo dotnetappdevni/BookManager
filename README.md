@@ -1,6 +1,5 @@
 
-
-[![.NET](https://github.com/dotnetappdevni/BookManager/actions/workflows/dotnet.yaml/badge.svg)](https://github.com/dotnetappdevni/BookManager/actions/workflows/dotnet.yaml)
+[![BookManagerAPI](https://github.com/dotnetappdevni/BookManager/actions/workflows/dotnet.yaml/badge.svg)](https://github.com/dotnetappdevni/BookManager/actions/workflows/dotnet.yaml)
 
 <h2>EDT Book Manager API</h2>
 
